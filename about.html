@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+
+    <link rel="stylesheet" href="def.css">
+    <link rel="stylesheet" href="Poppins.css">
+    <link rel="stylesheet" href="rubik.css">
+    <link rel="stylesheet" href="vollkorn.css">
+    <link rel="stylesheet" href="montserrat.css">
+    <link rel="stylesheet" href="oswald.css">
+
+
+    <style>
+
+
+        .intro-sec{
+            width: 100%;
+            height: fit-content;
+            min-height: 500px;
+            background-image: url(freepik__upload__17974.jpeg);
+            position: relative;
+            color: var(--classic-gold);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3em;
+            padding: 4em 0;
+            padding-bottom: 6em;
+            overflow:  hidden ;
+        }
+        .intro-sec > *{
+            z-index: 1;
+        }   
+        .intro-sec::after{
+            position: absolute;
+            top: 0;
+            content: '';
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.678);
+        }
+        .intro-sec-ttl{
+            width: 80%;
+            font-family: montserrat-bold;
+            font-size: 45pt;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: 1.5s, font-size 0s ;
+        }
+        .intro-p{
+            text-align: center;
+            transform: translateY(90px);
+            opacity: 0;
+            transition: 1.5s;
+        }
+
+        .socials{
+            margin-top: 20px
+        }
+        .social-con{
+            display: flex;
+            height: 35px;
+            gap: 10px;
+            position: relative;
+        }
+        .social-con > a > div{
+            height: 100%;
+            aspect-ratio: 1/1;
+        }
+        .social-a{
+            transition: left 3s ease-in-out;
+            padding: 5px;
+            background-color: black;
+            border-radius: 4px;
+        }
+
+        .person-sec{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .person{
+            width: 95%;
+            padding: 2.4em;
+            border:2px solid transparent;
+            display: flex;
+            margin: 50px 0;
+            transition: 1s;
+            opacity: 0;
+            transform: translateY(100px);
+            background-color: black;
+            box-shadow: 0px 0px 30px #d4af3715;
+            border-radius: 8px;
+        }
+        .per-img{
+            height: 350px;
+            aspect-ratio: 1/1;
+            background-image: url(l2.webp);
+            background-position: center;
+            background-size: cover;
+            margin-right: 30px;
+        }
+        .per-name{
+            font-size: 40pt;
+        }
+        .per-post{
+            font-size:25pt;
+        }
+        .phone,.email{
+            font-size: 12pt;
+            margin: 14px 0;
+        }
+        .phone::before{
+            content: '';
+        }
+        footer{
+            margin-top: 60px;
+        }
+
+
+        @media screen and (max-width:780px){
+            .per-img{
+                height: 300px;
+            }
+            .per-name{
+                font-size: 33pt;
+            }
+            .per-post{
+                font-size: 20pt;
+            }
+        }
+        @media screen and (max-width:695px){
+            .intro-sec-ttl{
+                width: 95%;
+                font-size: 35pt;
+            }
+        }
+        @media screen and (max-width:600px){
+            .person{
+                flex-direction: column;
+                padding: 1em;
+            }
+            .per-img{
+                margin: 0;
+                margin-bottom: 30px;
+                aspect-ratio: 1/1;
+            }
+        }
+        @media screen and (max-width: 430px){
+            .intro-sec{
+                min-height: 550px;
+            }
+            .per-name{
+               font-size: 27pt;
+            }
+            .per-post{
+                font-size: 16pt;
+            }
+        }
+        
+
+
+
+        @keyframes ret{
+            to{
+                opacity: 1;
+                scale: 1;
+                transform: translate(0);
+            }
+        }
+        .ret-anim{
+            animation-name: ret;
+        }
+        .ret-def{
+            opacity: 1;
+            scale: 1;
+            transform: translate(0);
+        }
+    </style>
+
+
+</head>
+<body>
+    <header>
+        <div class="logo-con">
+            <div class="logo-img">
+                <img src="logomono.png" width="100%" height="100%">
+            </div>
+            <h1 class="logo-name">MB REALTORS</h1>
+        </div>
+
+        <div class="mob-menu-toggle" onclick="toggleMenu(menuStatus)">
+            <img src="menutoggle.png" width="100%" height="100%"> 
+        </div>
+
+        <div class="menu-con">
+            <a class="menu-item m1">LISTINGS</a>
+            <a class="menu-item m2">REVIEWS</a>
+            <a class="menu-item m3">ABOUT</a>
+            <a class="menu-item m4">CONTACT</a>
+            <a class="sas menu-items">SCHEDULE A SHOWING</a>
+        </div>
+    </header>
+
+    <div class="mob-menu-con">
+        <div class="mob-menu">
+            <div class="mob-menu-close" >
+                <div class="close-img" onclick="toggleMenu(menuStatus)"><img src="menuclose.png" width="100%" height="100%"></div>
+            </div>
+            <a><div class="">Home</div></a>
+            <a ><div class="">Listings</div></a>
+            <a ><div class="">Reviews</div></a>
+            <a ><div class="">Contact</div></a>
+            <a ><div class="">Schedule a Showing</div></a>
+        </div>
+    </div>
+
+    <section class="intro-sec">
+        <h1 class="intro-sec-ttl">Lorem ipsum dolor sit amet consectetur adipisicing.</h1>
+        <p class="intro-p">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita alias perferendis quis.</p>
+    </section>
+
+    <section class="person-sec">
+        <div class="person">
+            <div class="per-img"></div>
+            <div class="per-info">
+                <h1 class="per-name">Ahmed Khan</h1>
+                <h2 class="per-post">Senior Real Estate Consultant</h2>
+                <p class="phone">+971 52 234 5678</p>
+                <p class="email">ahmed@mbrealestate.ae</p>
+                <div class="socials">
+                    <div class="social-con">
+                        <a class="social-a s1"><div><img src="facebook.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s2"><div><img src="insta.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s3"><div><img src="x.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s4"><div><img src="linked.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s5"><div><img src="tik.png" width="100%" height="100%"></div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="person">
+            <div class="per-img"></div>
+            <div class="per-info">
+                <h1 class="per-name">Omar Al-Mansoori</h1>
+                <h2 class="per-post">Off-Plan Property Expert</h2>
+                <p class="phone">+971 54 456 7890</p>
+                <p class="email">omar@mbrealestate.ae</p>
+                <div class="socials">
+                    <div class="social-con">
+                        <a class="social-a s1"><div><img src="facebook.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s2"><div><img src="insta.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s3"><div><img src="x.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s4"><div><img src="linked.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s5"><div><img src="tik.png" width="100%" height="100%"></div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="person">
+            <div class="per-img"></div>
+            <div class="per-info">
+                <h1 class="per-name">Sarah Al-Farsi</h1>
+                <h2 class="per-post">Luxury Property Specialist</h2>
+                <p class="phone">+971 50 123 4567</p>
+                <p class="email">sarah@mbrealestate.ae</p>
+                <div class="socials">
+                    <div class="social-con">
+                        <a class="social-a s1"><div><img src="facebook.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s2"><div><img src="insta.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s3"><div><img src="x.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s4"><div><img src="linked.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s5"><div><img src="tik.png" width="100%" height="100%"></div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="person">
+            <div class="per-img"></div>
+            <div class="per-info">
+                <h1 class="per-name">Jamal Yusuf</h1>
+                <h2 class="per-post">Investment Consultant</h2>
+                <p class="phone">+971 58 678 9012</p>
+                <p class="email">jamal@mbrealestate.ae</p>
+                <div class="socials">
+                    <div class="social-con">
+                        <a class="social-a s1"><div><img src="facebook.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s2"><div><img src="insta.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s3"><div><img src="x.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s4"><div><img src="linked.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s5"><div><img src="tik.png" width="100%" height="100%"></div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="person">
+            <div class="per-img"></div>
+            <div class="per-info">
+                <h1 class="per-name">Aisha Rahman</h1>
+                <h2 class="per-post">Client Relations Manager</h2>
+                <p class="phone">+971 55 345 6789</p>
+                <p class="email">aisha@mbrealestate.ae</p>
+                <div class="socials">
+                    <div class="social-con">
+                        <a class="social-a s1"><div><img src="facebook.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s2"><div><img src="insta.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s3"><div><img src="x.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s4"><div><img src="linked.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s5"><div><img src="tik.png" width="100%" height="100%"></div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="person">
+            <div class="per-img"></div>
+            <div class="per-info">
+                <h1 class="per-name">Layla Hassan</h1>
+                <h2 class="per-post">Marketing & Sales Coordinator</h2>
+                <p class="phone">+971 56 567 8901</p>
+                <p class="email">layla@mbrealestate.ae</p>
+                <div class="socials">
+                    <div class="social-con">
+                        <a class="social-a s1"><div><img src="facebook.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s2"><div><img src="insta.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s3"><div><img src="x.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s4"><div><img src="linked.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s5"><div><img src="tik.png" width="100%" height="100%"></div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+
+    <footer>
+        <div class="foot-grid">
+            <div class="foot-sec">
+                <div class="foot-ttl">Buyer Resources </div>
+                <div class="foot-links">
+                    <a class="foot-link">Find Your Dream Home</a>
+                    <a class="foot-link">Home Valuation Tool</a>
+                    <a class="foot-link">Expert Buying Tips</a>
+                    <a class="foot-link">Browse Listings</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">Seller Resources </div>
+                <div class="foot-links">
+                    <a class="foot-link">Maximize Your Home’s Value</a>
+                    <a class="foot-link">Selling Made Simple Guide</a>
+                    <a class="foot-link">Mortgage & Market Insights</a>
+                    <a class="foot-link">Our Commitment to You</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">Company</div>
+                <div class="foot-links">
+                    <a class="foot-link">Who We Are?</a>
+                    <a class="foot-link">Get in Touch</a>
+                    <a class="foot-link">Partnerships & Certifications</a>
+                    <a class="foot-link">Success Stories & Testimonials</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">MB Real Estate </div>
+                <div class="foot-links">
+                    <a class="foot-link">📍 79 E. 14th Avenue, City, State, Zip</a>
+                    <a class="foot-link">📞 (561) 555-8954</a>
+                    <a class="foot-link">📠 (561) 555-8172</a>
+                    <a class="foot-link">info@MBRealtors.com</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="foot-logo-con"><img src="logomono.png" alt="" width="100%" height="100%"></div>
+
+        <p class="dis">©2025 MB Real Estate. All rights reserved.</p>
+    </footer>
+
+    <script src="def.js"></script>
+    <script>
+        const persons = document.querySelectorAll('.person')
+        const introP = document.querySelector('.intro-p')
+
+
+        let arr2 = [introTl, introP]
+        persons.forEach(
+            person => {
+                arr2.push(person)
+            }
+        )
+
+        arr2.forEach(
+            elm => (
+               defObserver.observe(elm)
+            )
+        )
+    </script>
+
+</body>
+</html>
