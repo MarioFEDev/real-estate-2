@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MB Real Estate</title>
+    <link rel="stylesheet" href="def.css">
+    <link rel="stylesheet" href="Poppins.css">
+    <link rel="stylesheet" href="rubik.css">
+    <link rel="stylesheet" href="vollkorn.css">
+    <link rel="stylesheet" href="montserrat.css">
+    <link rel="stylesheet" href="oswald.css">
+
+
+    <style>
+        *{ 
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: montserrat-regular;
+            color: white;
+            background-position: center;
+            background-size: cover;
+        }
+
+        :root {
+            --rich-black: #0D0D0D;
+            --classic-gold: #FFD700;
+            --metallic-gold: #D4AF37;
+            --deep-gold: #B8860B;
+            --champagne-gold: #F7E7CE;
+
+            --header-height:'';
+        }
+ 
+        body,html{
+            width: 100%;
+            background-color: rgb(244, 244, 244);
+            overflow-x: hidden;
+            height: 100%;
+            background-color: var(--rich-black);
+            position: relative;
+        }
+        body{
+            overflow-x: hidden;
+            position: relative;
+            padding-top: var(--header-height);
+        }
+        em{
+            text-decoration: none;
+            font-style: normal;
+            font-family: inherit;
+        }
+        header{
+            height: 100px;
+            width: 100%;
+            background-color: var(--rich-black);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding:0 2em ; 
+            position: fixed;
+            top: 0;
+            z-index: 3;
+        }   
+        .menu-con {
+            display: flex;
+            gap: 2.5em;
+            align-items: center;
+            font-size: 10pt;
+            cursor: pointer;
+        }
+        .logo-con{
+            height: 55px;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(-180px);
+            transition: 2s ;
+        }
+        .logo-img{
+            height: 100%;
+            aspect-ratio: 1/1;
+        }
+        .logo-name{
+            font-size: 27spt;
+            font-family: vollkorn-Bold;
+            margin-left: 10px;
+            color: var(--champagne-gold);
+        } 
+        .menu-item{
+            transition: all .3s linear;
+            position: relative;
+            padding: .5em .5em;
+            color: var(--metallic-gold);
+            transform: translateY(80px);
+            opacity: 0;
+            animation-duration: 2s ;
+            animation-fill-mode: forwards;
+        }
+        .m2{
+            animation-delay: .3s;}
+        .m3{
+            animation-delay: .6s;}
+        .m4{
+            animation-delay: .9s;}
+        .menu-item::after{
+            content: '';
+            height: 3px;
+            border-radius: 3px;
+            width: 0%;
+            background-color: var(--deep-gold);
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            translate: -50%;
+            opacity: 0;
+            transition: opacity .2s linear, width .3s linear;
+        }
+        .menu-item:hover {
+            color: var(--deep-gold);
+            scale: 1.03;
+        }
+        .menu-item:hover::after{
+            width: 100%;
+            opacity: 1;
+        }
+        .sas{
+            padding: .9em 1.1em;
+            border: 2px solid white;
+            transition: 2s, scale .4s, background-color .4s ;
+            color: var(--metallic-gold);
+            opacity: 0;
+            transform: translateX(100px);
+        }
+        .sas:hover{
+            scale:1.05;
+            background-color: var(--deep-gold);
+            color: white;
+        }
+        .sas::after{
+            display: none;
+            visibility: 0;
+        }
+
+
+        @keyframes menu-in{
+            0%{
+                transform: translateX(110%);
+            }
+            100%{
+                transform: translateX(0);
+            }
+        }
+        @keyframes menu-out{
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(110%);
+            }
+        }
+        @keyframes x-spin{
+            0%{
+                scale: .3;
+            }
+            100%{
+                scale: 1;
+                transform: rotate(-720deg);
+            }
+        }
+        @keyframes x-spin-out{
+            0%{
+                scale: 1;
+            }
+            100%{
+                scale: .3;
+                transform: rotate(720deg);
+            }
+        }
+        .mob-menu-toggle{
+            height: 50%;
+            position: absolute;
+            top: 50%;
+            translate: 0 -50%;
+            right: 0;
+            margin-right: 10px;
+            display: none;
+        }
+        .mob-menu-con{
+            position: fixed;
+            z-index: 30;
+            width: 100%;
+            height: 100vh;
+            translate: 0%;
+            background-color: rgba(0, 0, 0, 0.744);
+            backdrop-filter: blur(5px);
+            color: white;
+            display: none;
+            align-items: center;
+            top:0;
+        }
+        .menu-in{
+            animation: menu-in ease-in-out .7s 1 0s both;
+        }
+        .menu-out{
+            animation: menu-out ease-in-out .7s 1 0s both;
+        }    
+        .mob-menu{
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-auto-rows: 70px;
+        }
+        .mob-menu a{
+            display: flex;
+            justify-content: center;
+            color: white;
+        }
+        .mob-menu a > div,
+        .mob-menu-close{
+            width: 90%;
+            height: 100%;
+            background-color:transparent;
+            border-bottom: 2px solid grey;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .mob-menu-close{
+            position: absolute;
+            top: 0;
+            height: 60px;
+            width: 100%;
+        }
+        .close-img{
+            height: 100%;
+        }
+        .x-spin{
+            animation: x-spin ease-in-out .9s 1 0s forwards;
+        }
+        .x-spin-out{
+            animation: x-spin-out ease-in-out .9s 1 0s forwards;
+        }
+
+
+        .intro-sec{
+            width: 100%;
+            height: fit-content;
+            min-height: 400px;
+            background:transparent;
+            position: relative;
+            color: var(--classic-gold);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3em;
+            padding: 4em 0;
+            padding-bottom: 6em;
+            overflow:hidden ;
+        }
+        .intro-sec > *{
+            z-index: 1;
+        }   
+        .intro-sec::after{
+            position: absolute;
+            top: 0;
+            content: '';
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.678);
+        }
+        .int-back-con{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url(intro-back.webp);
+            background-position: top;
+            background-size: cover;
+            z-index: 0;
+            scale: 1.7;
+            opacity: .3;
+            transition: scale 1.5s , opacity 1.3s;
+        }
+        .intro-sec-ttl{
+            width: 80%;
+            font-family: vollkorn-bold;
+            font-size: 45pt;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: 1.5s, font-size 0s ;
+        }
+        .dubai{
+            color: var(--metallic-gold);
+            font-size:48pt;
+        }
+        .showing{
+            padding: 1em 1.5em;
+            background: transparent;
+            border: 3px solid white;
+            font-size: 12pt;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: 1.5s ;
+        }
+        .showing:hover{
+            scale:1.05;
+            background-color: var(--deep-gold);
+            color: white;
+        }
+
+        .fl-sec{
+            width: 100%;
+            height: fit-content;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background-color:var(--rich-black) ;
+            padding:5em 0;
+            padding-left: .5em;
+        }
+        .fl-sec > div{
+            background-clip: cover;
+            background-position: center;
+            position: relative;
+        }
+        .fl-intro{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transform: translateX(-100px);
+            opacity: 0;
+            transition:  1s;
+        }
+        .fl-intro h1{
+            font-size: 40pt;
+            font-family: rubik-semibold;
+            position: relative;
+            padding: 20px 0;
+        }
+        .fl-intro h1::before{
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 30%;
+            height: 4px;
+            border-radius: 3px;
+            background-color: var(--metallic-gold);
+        }
+        .all-listings{
+            padding: 1em 0 ;
+            background-color: white;
+            color: var(--rich-black);
+            width: 70%;
+            font-family: rubik-semibold;
+            font-size: 13pt;
+            border: none;
+            transition: .3s;
+        }
+        .all-listings:hover{
+            scale: 1.02;
+            background-color: var(--classic-gold);
+        }
+        .listing {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            padding: 0 0 13px 13px;
+            width: 100%;
+            aspect-ratio: 1/1;
+            transform: translateY(150px);
+            animation-duration: 1s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        .l2{
+            animation-delay: .2s;}
+        .l3{
+            animation-delay: .3s;} 
+        .l4{
+            animation-delay: .4s;}
+        .l5{
+            animation-delay: .5s;}
+        .listing::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: inherit; 
+            background-size: cover;
+            background-position: center; 
+            filter: grayscale(100%); 
+            backdrop-filter: grayscale;
+            z-index: 0; 
+        }
+        .listing::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0d0d0db7;
+            filter: grayscale(100%); 
+            backdrop-filter: grayscale;
+            z-index: 0; 
+        }
+
+        .listing > * {
+            position: relative; 
+            z-index: 1;
+            color: rgb(255, 255, 255);
+        }
+        .l1{
+            background-image: url(l1.webp);
+        }
+        .l2{
+            background-image: url(l2.webp);
+        }
+        .l3{
+            background-image: url(l3.webp);
+        }
+        .l4{
+            background-image: url(l4.webp);
+        }
+        .l5{
+            background-image: url(l5.webp);
+        }
+        .name{
+            font-family: rubik-semibold;
+            font-size: 18pt;
+        }
+        .price{
+            font-family: vollkorn-bold;
+            font-size: 18pt;
+        }
+        .price::before{
+            content: 'AED ';
+            font-size: 15pt;
+        }
+
+        .review-sec{
+            background-image: url(revintroback.webp);
+            min-height: 500px;
+            height: fit-content;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 4em 0 ;
+        }
+        .review-sec > *{
+            position: relative;
+            z-index: 1;
+        }
+        .rev-ttl{
+            text-align: center;
+            font-family: poppins-extrabold;
+            font-size: 35pt;
+            width: 85%;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: 1.5s;
+        }
+        .rev-sub{
+            font-size: 25pt;
+            color: var(--champagne-gold);
+            transform: translateY(-120px);
+            opacity: 0;
+            transition:transform 1.8s, opacity 1.5s;
+        }
+        .review-sec::after{
+            content: '';
+            position:absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #3f2f05e6;
+            z-index: 0;
+        }
+        .revs{
+            display: flex;
+            width: 70%;
+            gap: 2em;
+            margin-top: 40px;
+        }
+        .test{
+            font-family: poppins-regular;
+            margin-bottom:25px;
+        }
+        .tcon{
+            animation-duration: 1.5s;
+            animation-fill-mode: forwards;
+            transform: translateX(-100px);
+            opacity: 0;
+        }
+        .test2{
+            transform: translateX(100px);
+        }
+        .test::before{
+            content: open-quote;
+            font-size: 15pt;
+            font-family: times;
+            font-weight: bold;
+        }
+        .test::after{
+            content: close-quote;
+            font-size: 15pt;
+            font-family: times;
+            font-weight: bold;
+        }
+        .test-name::before{
+            content:'-';
+        }
+        .rev-btn{
+            padding: .9em 1.3em;
+            font-size: 12pt;
+            margin-top: 20px;
+            background-color: var(--rich-black);
+            color: white;
+            border: none;
+            font-family: poppins-semibold;
+            font-size: 13pt;
+            transform: translate(80px);
+            opacity: 0;
+            transition: 1.5s;
+        }
+        .rev-btn:hover{
+            transition: all .5s;
+            scale: 1.02;
+            background-color: var(--classic-gold);
+            color: black;
+        }
+
+
+        .about-sec{
+            width: 100%;
+            height: fit-content;
+            min-height: 450px;
+            background:transparent;
+            position: relative;
+            color: var(--classic-gold);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3em;
+            padding: 4em 0;
+            padding-bottom: 6em;
+            overflow:hidden ;
+            margin-top: 120px;
+            background-image: url(freepik__upload__17974.jpeg);
+            background-size:cover ;
+            background-position: center;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: 2.2s;
+        }
+        .about-sec > *{
+            position: relative;
+            z-index: 1;
+        }   
+        .about-sec::after{
+            position: absolute;
+            top: 0;
+            content: '';
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.42);
+        }
+        .mtt{
+            font-family: montserrat-extrabold;
+            font-size: 60pt;
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: 1.5s;
+        }
+        .mya{
+            padding: 1em 1.7em;
+            background-color: transparent;
+            border: 2px solid white;
+            font-size: 13pt;
+            font-family: poppins-semibold;
+            backdrop-filter: blur(6px);
+            transform: translateX(100px);
+            opacity: 0;
+            transition: 1.5s;
+        }
+        .mya:hover{
+            transition: .5s;
+            scale: 1.02;
+            background-color: white;
+            color: black;
+        }
+
+        
+        footer{
+            width: 100%;
+            height: fit-content;
+            border: 2px solid black;
+            margin-top: 130px;
+            padding: 50px 2em 30px 2em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: black;
+        }
+        .foot-grid{
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            margin-bottom: 50px;
+        }
+        .foot-ttl{
+            font-size: 20pt;
+            margin-bottom: 30px;
+            font-family: poppins-semibold;
+            color: var(--deep-gold);
+        }
+        .foot-links{
+            display: flex;
+            flex-direction: column;
+        }
+        .foot-link{
+            margin: .3em 0;
+            font-family: poppins-regular;
+            color: var(--metallic-gold);
+        }
+        .foot-logo-con{
+            width: 30%;
+            min-width: 300px;
+        }
+        .dis{
+            font-family: poppins-light; 
+            color: var(--metallic-gold);
+        }
+        @media screen and (max-width: 980px){ 
+            header{
+                flex-direction: column;
+                height: 130px;
+                justify-content: center;
+                gap: .7em;
+            }
+        }
+        @media screen and (max-width: 930px){  
+            .rev-ttl{
+                width: 90%;
+            }
+            .foot-grid{
+                grid-template-columns: repeat(2,1fr);
+            }
+            .foot-sec{
+                margin-top: 30px;
+            }
+        }
+        @media screen and (max-width: 780px){
+            .fl-sec{
+                grid-template-columns:repeat(2, 1fr) ;
+            }
+        }
+        @media screen and (max-width: 695px){
+            .menu-con{
+                display: none;
+            }
+            .mob-menu-toggle{
+                display: block;
+            }
+            header{
+                height: 90px;
+            }
+            .intro-sec h1{
+                width: 95%;
+                font-size: 28pt;
+            }
+            .dubai{
+                font-size: 32pt;
+            }
+            .revs{
+                flex-direction: column;
+            }
+        }
+        @media screen and (max-width: 600px){  
+            .fl-sec{
+                grid-template-columns: 1fr;
+            } 
+            .fl-intro{
+                min-height: fit-content;
+                padding: 3em 0;
+            }
+            .rev-ttl{
+                font-size: 25pt ;
+            }
+            .rev-sub{
+                font-size: 19pt;
+            }
+            .foot-grid{
+                grid-template-columns: 1fr;
+            }
+            .foot-sec > div{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+            .dis{
+                font-size: 9pt;
+            }
+        }
+        @media screen and (max-width: 430px){
+            .intro-sec{
+                min-height: 550px;
+            }
+            .showing{
+                font-size: 11pt;
+            }
+            .test{
+                font-size: 10pt;
+            }
+            .listing{
+                animation-delay: 0s;
+            }
+        }
+        @media screen and (max-width: 360px){  
+            .logo-name{
+                font-size: 17pt;
+            }
+            .rev-ttl{
+                font-size: 22pt ;
+            }
+            .rev-sub{
+                font-size: 17pt;
+            }
+        }
+        
+
+        @keyframes ret{
+            to{
+                opacity: 1;
+                scale: 1;
+                transform: translate(0);
+            }
+        }
+        .ret-anim{
+            animation-name: ret;
+        }
+        .ret-def{
+            opacity: 1;
+            scale: 1;
+            transform: translate(0);
+        }
+        .no-scroll{
+            overflow-y: hidden;
+        }
+        ::-webkit-scrollbar{
+            width: 8px;
+            background-color: black;
+        }
+        ::-webkit-scrollbar-thumb{
+            background-color: goldenrod;
+            border-radius: 3px;
+        }
+        ::selection{
+            background-color: #b8870bbc;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo-con">
+            <div class="logo-img">
+                <img src="logomono.png" width="100%" height="100%">
+            </div>
+            <h1 class="logo-name">MB REALTORS</h1>
+        </div>
+
+        <div class="mob-menu-toggle" onclick="toggleMenu(menuStatus)">
+            <img src="menutoggle.png" width="100%" height="100%"> 
+        </div>
+
+        <div class="menu-con">
+            <a href="listings.html" class="menu-item m1">LISTINGS</a>
+            <a href="review.html" class="menu-item m2">REVIEWS</a>
+            <a href="about.html" class="menu-item m3">ABOUT</a>
+            <a href="contact.html" class="menu-item m4">CONTACT</a>
+            <a href="contact.html" class="sas menu-items">SCHEDULE A SHOWING</a>
+        </div>
+    </header>
+
+    <div class="mob-menu-con">
+        <div class="mob-menu">
+            <div class="mob-menu-close" >
+                <div class="close-img" onclick="toggleMenu(menuStatus)"><img src="menuclose.png" width="100%" height="100%"></div>
+            </div>
+            <a href="index.html" ><div class="">Home</div></a>
+            <a href="listings.html" ><div class="">Listings</div></a>
+            <a href="review.html" ><div class="">Reviews</div></a>
+            <a href="contact.html" ><div class="">Contact</div></a>
+            <a href="contact.html" ><div class="">Schedule a Showing</div></a>
+        </div>
+    </div>
+
+    <section class="intro-sec">
+        <div class="int-back-con"></div>
+        <h1 class="intro-sec-ttl">EXCLUSIVE HOMES IN THE HEART OF <em class="dubai">DUBAI</em> </h1>
+        <button class="showing">SCHEDULE A PRIVATE VIEWING</button>
+    </section>
+
+    <section class="fl-sec">
+        <div class="fl-intro">
+            <h1>FEATURED <br> LISTINGS</h1>
+            <button class="all-listings">
+                VIEW ALL LISTINGS
+            </button>
+        </div>
+        <div class="listing l1">
+            <p class="name">Villa 22 Al Wasl</p>
+            <p class="price">5,230,000</p>
+        </div>
+        <div class="listing l2">
+            <p class="name">77 Downtown Boulevard</p>
+            <p class="price">3,990,000</p>
+        </div>
+        <div class="listing l3">
+            <p class="name">The 8 at Jumeirah</p>
+            <p class="price">3,000,000</p>
+        </div>
+        <div class="listing l4">
+            <p class="name">Skyline 23 Residences</p>
+            <p class="price">4,290,000</p>
+        </div>
+        <div class="listing l5">
+            <p class="name">Maison 99 Emirates Hills </p>
+            <p class="price">2,230,000</p>
+        </div>
+    </section>
+
+    <section class="review-sec">
+        <h1 class="rev-ttl">
+             REAL STORIES, REAL SATISFACTION.<br>
+            <em class="rev-sub">SEE WHY OUR CLIENTS TRUST US.</em>
+        </h1>
+        <div class="revs">
+            <div class="test1 tcon ">
+                <p class="test">
+                    I buy and sell properties nearly as often as the seasons change. I thrive on variety and love navigating the real estate market. But I've never experienced a smoother transaction than when working with Elevate Realty. Their honesty and clarity assured me I was securing the best possible home and deal. I'll absolutely use their services again. I know I will when I'm ready for my next move.
+                </p>
+                <p class="test-name">Alicia Reynolds</p>
+            </div>
+            <div class="test2 tcon ">
+                <p class="test">
+                    I relied on Elevate Realty to sell my family's home—the one I grew up in. It was an emotional journey for me, but they made everything so seamless. They ensured we got a great price and a fair deal while preserving the memories tied to the home. They even found us a temporary rental that perfectly suited our needs while we planned our next steps. I can't thank them enough!
+                </p>
+                <p class="test-name"> Marcus Greene</p>
+            </div>
+        </div>
+        <button class="rev-btn " onclick="">More Reviews</button>
+    </section>
+
+    <section class="about-sec">
+        <h1 class="mtt">MEET THE TEAM</h1>
+        <p> MB Real Estate agents are dedicated to connecting you with the perfect property.</p>
+        <button class="mya">Meet Your Agents</button>
+    </section>
+
+
+
+    <footer>
+        <div class="foot-grid">
+            <div class="foot-sec">
+                <div class="foot-ttl">Buyer Resources </div>
+                <div class="foot-links">
+                    <a class="foot-link">Find Your Dream Home</a>
+                    <a class="foot-link">Home Valuation Tool</a>
+                    <a class="foot-link">Expert Buying Tips</a>
+                    <a class="foot-link">Browse Listings</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">Seller Resources </div>
+                <div class="foot-links">
+                    <a class="foot-link">Maximize Your Home’s Value</a>
+                    <a class="foot-link">Selling Made Simple Guide</a>
+                    <a class="foot-link">Mortgage & Market Insights</a>
+                    <a class="foot-link">Our Commitment to You</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">Company</div>
+                <div class="foot-links">
+                    <a class="foot-link">Who We Are?</a>
+                    <a class="foot-link">Get in Touch</a>
+                    <a class="foot-link">Partnerships & Certifications</a>
+                    <a class="foot-link">Success Stories & Testimonials</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">MB Real Estate </div>
+                <div class="foot-links">
+                    <a class="foot-link">📍 79 E. 14th Avenue, City, State, Zip</a>
+                    <a class="foot-link">📞 (561) 555-8954</a>
+                    <a class="foot-link">📠 (561) 555-8172</a>
+                    <a class="foot-link">info@MBRealtors.com</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="foot-logo-con"><img src="logomono.png" alt="" width="100%" height="100%"></div>
+
+        <p class="dis">©2025 MB Real Estate. All rights reserved.</p>
+    </footer>
+
+
+
+    <script>
+        const header = document.querySelector('header');
+        header.addEventListener('resize', setHeaderHeight)
+        setHeaderHeight()
+        function setHeaderHeight() {
+            const headerHeight = header.offsetHeight;
+            console.log(headerHeight)
+            document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
+        }
+
+
+        let menuStatus = false
+
+        const logo = document.querySelector('.logo-con')
+        const html = document.querySelector('html')
+        const body = document.querySelector('body')
+        const menuItems = document.querySelectorAll('.menu-item')
+        const sas = document.querySelector('.sas')
+        const introSec = document.querySelector('.int-back-con')
+        const introTl = document.querySelector('.intro-sec-ttl')
+        const showing = document.querySelector('.showing')
+        const flIntro = document.querySelector('.fl-intro')
+        const listings = document.querySelectorAll('.listing')
+        const revTl = document.querySelector('.rev-ttl')
+        const revSub = document.querySelector('.rev-sub')
+        const rev = document.querySelectorAll('.tcon')
+        const revBtn = document.querySelector('.rev-btn')
+        const menu = document.querySelector('.mob-menu-con')
+        const x = document.querySelector('.close-img')
+        const about = document.querySelector('.about-sec')
+        const mtt = document.querySelector('.mtt')
+        const mya = document.querySelector('.mya')
+
+
+
+        const arr1 = [logo, sas, introTl, showing, flIntro, revTl, revSub, revBtn, mtt, mya, about]
+
+        introSec.classList.add('ret-def')
+        logo.classList.add('ret-def')
+        const defObserver = new IntersectionObserver(
+            entries => entries.forEach(
+                entry => {
+                if(entry.isIntersecting){
+                    entry.target.classList.add('ret-def')
+                    defObserver.unobserve(entry.target)
+                }
+            }
+            ),{threshold:.5}
+        )
+        arr1.forEach(cls => defObserver.observe(cls))
+
+        const animObserver = new IntersectionObserver(
+            entries => entries.forEach(
+                entry => {
+                    if(entry.isIntersecting){
+                        entry.target.classList.add('ret-anim')
+                    }
+                    
+                }
+            )
+        )
+
+        function toggleMenu(phase){
+            if(!phase){
+                menuIn()
+            }else if(phase){
+                menuOut()
+            }
+        }
+        function menuIn() {
+            menuStatus = true;
+            setTimeout( () => {menu.style.display = 'flex'}, 100 )
+            if (menu.classList.contains('menu-out')) {
+                menu.classList.remove('menu-out');
+                x.classList.remove('x-spin-out');
+            }
+            menu.classList.add('menu-in');
+            x.classList.add('x-spin');
+            html.classList.add('no-scroll')
+        }
+
+        function menuOut() {
+            menuStatus = false;
+            menu.classList.remove('menu-in');
+            x.classList.remove('x-spin');
+            menu.classList.add('menu-out');
+            x.classList.add('x-spin-out');
+            html.classList.remove('no-scroll')
+            menu.addEventListener('animationend', () => {
+            if (!menuStatus) {
+                menu.style.display = 'none';
+            }
+            }, { once: true });
+        }
+
+
+
+        menuItems.forEach(item => {animObserver.observe(item)})
+        listings.forEach(listing => {animObserver.observe(listing)})
+        rev.forEach(test => {animObserver.observe(test)})
+        
+    </script>
+</body>
+</html>

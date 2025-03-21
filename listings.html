@@ -1,0 +1,3458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listings</title>
+    <link rel="stylesheet" href="def.css">
+    <link rel="stylesheet" href="Poppins.css">
+    <link rel="stylesheet" href="rubik.css">
+    <link rel="stylesheet" href="vollkorn.css">
+    <link rel="stylesheet" href="montserrat.css">
+
+
+    <style>
+        body{
+            padding-top: 0;
+        }
+        html{
+            padding-top: var(--header-height);
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
+        button{
+            border: none;
+            outline: none;
+        }
+
+
+        .listing-grid{
+            width: 97%;
+            height: fit-content;
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            border: 1px solid transparent;
+            padding: 1em;
+            grid-gap:5em  2.5em ;
+            margin-top: 40px;
+        }
+        .listing{
+            width: 100%;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            color: var(--metallic-gold);
+            background-color: black;
+            padding-bottom: 15px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition:opacity .4s, 1.5s;
+        }
+        .listing:hover > .list-img::after{
+            opacity: 1;
+        }
+        .list-img{
+            width: 100%;
+            aspect-ratio: 3/2;
+            background-color: transparent;
+            position: relative;
+        }
+        .list-img::after{
+            content: 'View Property';
+            color: black;
+            font-family: rubik-bold;
+            font-size: 17pt;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transition: 1s;
+        }
+        .list-img > img{
+            width: 100%;
+            height: 100%;
+        }
+        .list-name{
+            font-family: Rubik-semibold;
+            margin-top: 20px ;
+            margin-bottom: 0pt;
+            font-size: 20pt;
+            padding-left: .5em;
+        }
+        .location{
+            margin-bottom: 20px;
+            padding-left: .5em;
+        }
+        .price{
+            font-size: 17pt;
+            font-family: poppins-semibold;
+            margin-bottom: 10px;
+            padding-left: .5em;
+        }
+        .list-info{
+            padding-left: .5em;
+        }
+        .list-info,
+        .list-info > em{
+            font-size: 14pt;
+            font-family:rubik-regular;
+        }
+        em{
+            text-decoration: none;
+            font-style: normal;
+        }
+        .price{
+            color: var(--metallic-gold);
+            font-size: 30pt;
+            font-family: vollkorn-semibold;
+        }
+        .price::before{
+            content: 'AED ';
+            font-size: 16pt;
+            font-family: vollkorn-bold;
+        }
+        .bed::after{
+            content: ' Bedrooms';
+        }
+        .bath::after{
+            content: ' Bathrooms';
+        }
+        .size::after{
+            content: ' SqFt';
+        }
+
+        .viewport-sec{
+            width: 100%;
+            height: var(--body-spc);
+            position: fixed;
+            z-index: 3;
+            overflow-y: scroll;
+            padding: 1.5em ;
+            padding-bottom: 300px;
+            background-color: rgb(0, 0, 0);overflow-x: hidden;
+
+        }
+        .vp-intro{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .vp-intro-img{
+            width: 50%;
+            min-width: 450px;
+            aspect-ratio: 3/2;
+            background-size: cover;
+        }
+        .vp-name{
+            font-size: 35pt;
+            font-family: rubik-bold;
+
+        }
+        .vp-location::before{
+            content: '📌';
+        }
+        .vp-location{
+            margin-bottom: 15px;
+        }
+        .vp-location > em{
+            font-family: rubik-semibold;
+            font-size: 15pt;
+        }
+        .vp-intro-info{
+            padding-top: 2em;
+            width: 43%;
+            border: 1px solid transparent;
+        }
+        .vp-price{
+            font-size: 30pt;
+            margin:20px 0 ;
+            font-family: vollkorn-bold;
+        }
+        .vp-price::before{
+            content: 'AED ';
+            font-size: 15pt;
+        }
+        .vp-feat{
+            width: 100%;
+            display:grid;
+            grid-template-columns: 1fr;
+            grid-auto-rows: 50px;
+            grid-gap: 20px;
+        }
+        .vp-feat > div{
+            display: flex;
+            align-items: center;
+        }
+        .feat-img{
+            height: 100%;
+            aspect-ratio: 1/1;
+            margin-right: 10px;
+        }
+        .vp-feat > div > p{
+            font-size: 23pt;
+            font-family: rubik-bold;
+        }
+        .vp-feat > div > p::after{
+            font-size: 10pt;
+        }
+        .vp-bed::after{
+            content: ' Bedrooms';
+        }
+        .vp-bath::after{
+            content: ' Bathrooms';
+        }
+        .vp-size::after{
+            content: ' SqFt.';
+        }
+
+
+        .gallery-sec{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top:100px;
+        }
+        .g{
+            font-size: 40pt;
+            font-family: vollkorn-bold;
+        }
+        .gallery-grid{
+            width: 80%;
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            grid-gap: 2.5em;
+        }
+        .gallery-grid > div{
+            width: 100%;
+            aspect-ratio: 3/2;
+            border: 1px solid transparent;
+            position: relative;
+            margin-bottom: 30px;
+        }
+        .gallery-grid > div::after{
+            content: attr(data-title);
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            translate: -50% 25px;
+            display: block;
+            font-size: 15pt;
+            text-align: center;
+            width: 100%;
+        }
+        .all-imgs{
+            margin-top: 0px;
+        }
+        .g-sec{
+            width: 100%;
+            height: fit-content;
+            position: relative;
+            margin-bottom: 50px;
+        }
+        .gallery-slider{
+            width: 100%;
+            height: 450px;
+            background-color: rgb(255, 255, 255, 0);
+            overflow: hidden;
+            display: flex;
+            position: relative;
+        }
+        .gallery-slider::after{
+            content:'' ;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.776) , transparent, rgba(0, 0, 0, 0.763) );
+        }
+        .gallery-slider::-webkit-scrollbar{
+            height: 8px;
+        }
+        .video-con{
+            width: 80%;
+            aspect-ratio: 16/9;
+            border: 1px solid transparent;
+        }
+        .gs-item{
+            height: 100%;
+            aspect-ratio: 3/2;
+            height: 100%;
+            display: none;
+        }
+        .gallery-slider > .current{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            translate: -50% -50%;
+            display: block;
+        }
+        .gallery-slider > .left{
+            display: block;
+            position: absolute;
+            left: 0%;
+            top: 50%;
+            translate: -50% -50%;
+            scale: .8;
+            z-index: -1;
+        }
+        .gallery-slider > .right{
+            display: block;
+            position: absolute;
+            right: 0%;
+            top: 50%;
+            translate: 50% -50%;
+            scale: .8;
+            z-index: -1;
+        }
+        .gallery-slider > .left-outer{
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            translate: -150% -50%;
+            scale: .8;
+            opacity: 0;
+        }
+        .gallery-slider > .right-outer{
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            translate: 150% -50%;
+            scale: .8;
+            opacity: 0;
+        }
+       
+        .slider-button-con{
+            height: 80px;
+            width: 100%;
+            background-color: transparent;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            translate: 0 -50%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 3em;
+        }
+        .slider-button-con > button{
+            height: 100%; 
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            font-family: poppins-extrabold;
+            font-size: 40pt;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.313);
+            border: none;
+            outline: none;
+        }
+
+        .g-page{
+            width: 100%;
+            height: fit-content;
+            min-height: 300px;
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            grid-gap: 2em;
+            padding: 1em;
+        }
+        .g-page > .gs-item{
+            display: block;
+        }
+        .grid-button-con{
+            width: 100%;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            gap: .2em;
+        }
+        .grid-button-con > *{
+            height: 100%;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .g-btn{
+            border: none;
+            color: black;
+            font-family: rubik-semibold;
+            outline: none;
+            background-color: white;
+            font-size: 20pt;
+            border-radius: 3px;
+        }
+
+        .change-view-con{
+            width: 100%;
+            height: 60px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            gap: 3em;
+            margin-top: 50px;
+        }
+        .change-view{
+            height: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 4px;
+            background-color: #1a1a1a;
+            padding: 5px;
+            position: relative;
+        }
+        .change-view::before{
+            content: attr(data-title);
+            white-space: nowrap;
+            position: absolute;
+            top:0;
+            left: 50%;
+            translate: -50% -20px; 
+            font-size: 11.5pt;
+            opacity: 0;
+            transition: .5s;
+        }
+        .change-view:hover::before{
+            opacity: 1;
+        }
+
+        .prop-info-sec{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .prop-info-con{
+            width: 90%;
+            height: auto;
+            border: 1px solid white;
+            display: flex;
+            border-radius: 10px;
+            padding: 1em;
+        }
+        .prop-info{
+            display: flex;
+            flex-direction: column;
+            gap: .5em;
+        }
+        .prop-info > p{
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid var(--metallic-gold);
+            padding: .5em;
+            border-radius:5px ;
+            font-family: rubik-regular;
+            font-size: 15pt;
+
+        }
+        .prop-info > p::before{
+            content: attr(data-title);
+            font-family: poppins-regular;
+            font-size: 13pt;
+            display: inline;
+        } 
+        .map{
+            height: 500px;
+            aspect-ratio: 1/1;
+            margin-left: 50px;
+        }
+        .prop-deet{
+            width: 100%;
+        }
+        .prop-deet > p{
+            width: 100%;
+        }
+
+        .floor-plan{
+            width: 550px;   
+        }
+        .vp-features{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            grid-gap: .5em;
+            padding: .8em;
+            border: 2px solid var(--metallic-gold); 
+            margin: 20px 0;
+        }
+        legend{
+            font-size: 20pt;
+            font-family: poppins-semibold;
+        }
+        .vp-features > p{
+            font-family: poppins-regular;
+            font-size: 12pt;
+        }
+        .vp-features > p::before{
+            content: "\25C6";
+            color: var(--metallic-gold);
+            margin-right: 5px;
+            font-size: 6pt;
+
+        }
+        .vp-contact-sec{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            height: fit-content;
+            padding-left: 4em;
+        }
+        .vp-contact{
+            width: 100%;
+            height: fit-content;
+            padding-bottom: 1.5em;
+            display: flex;
+            color: white;
+            position: relative;
+            background-image: url();
+            background-position: center;
+            background-size: cover;
+            border: 1px solid transparent;
+        }
+        .vp-contact > *{
+            z-index: 2;
+        }
+        .vp-contact::after{
+            content:'';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.635);
+            z-index: 1;
+        }
+        .vp-contact-img{
+            height: 270px;
+            aspect-ratio: 1/1;
+            padding: 0em;
+            margin: 1em;
+        }
+        .vp-contact-txt{
+            padding-top: 2em;
+        }
+        .vp-contact-txt h2{
+            font-size: 26pt;
+            font-family: vollkorn-regular;
+            margin-bottom: 15pt;
+        }
+        .vp-contact-txt h1{
+            font-size: 20pt;
+            font-family: rubik-semibold;
+        }
+        .vp-contact-txt p::before{
+            content: attr(data-title);
+            font-size: 23pt;
+        } 
+        .con-agt-btn{
+            margin-top: 10px;
+            padding: .8em .9em;
+            font-size: 13pt;
+            background-color: rgb(0, 0, 0);
+            transition: all .4s ease-in-out;
+            border-radius: 4px;
+
+        }
+        .con-agt-btn:hover{
+            background-color: var(--deep-gold);
+        }
+        .back-btn-con{
+            width: 95%;
+            position: fixed;
+            z-index: 100;
+            display: flex;
+            flex-direction: row-reverse;
+            translate: 0 -15px;
+        }
+        .back-btn{
+            width:100px;
+            height: 40px;
+            border-radius:5px;
+            background-color: var(--metallic-gold);
+            color: black;
+            font-family: poppins-semibold;
+            font-size: 15pt;
+        }
+
+        .none{
+            display: none;
+        }
+        .tb{
+            border: transparent;
+        }
+        @keyframes ret{
+            to{
+                opacity: 1;
+                scale: 1;
+                transform: translate(0);
+            }
+        }
+        .ret-anim{
+            animation-name: ret;
+        }
+        .ret-def{
+            opacity: 1;
+            scale: 1;
+            transform: translate(0);
+        }
+
+
+        @media screen and (max-width:1030px){
+            .list-name{
+                font-size: 17pt;
+            }
+            .price{
+                font-size: 20pt;
+            }
+            .price::after{
+                font-size: 18pt;
+            }
+            .list-info > em{
+                font-size: 12pt;
+            }
+            .vp-name{
+                font-size: 30pt;
+            }
+            .vp-price{
+                font-size: 26pt;
+            }
+            .vp-price::before{
+                font-size: 13pt;
+            }
+            .gallery-slider > .current{
+                height: 80%;
+            }
+            .gallery-slider > .left{
+                height: 80%;
+                translate: -55% -50%;
+            }
+            .gallery-slider > .right{
+                height: 80%;
+                translate: 55% -50%;
+            }
+        }
+        @media screen and (max-width:980px){
+            html{
+                padding-top: 130px;
+            }
+            .gallery-grid{
+                width: 90%;
+            }
+            .map{
+                width: 400px;
+                height: 400px;
+            }
+        }
+        @media screen and (max-width:870px){
+            .vp-intro{
+                flex-direction: column;
+            }
+            .vp-intro-img{
+                width: 600px;
+                height: 400px;
+            }
+            .vp-intro-info{
+                width: 100%;
+            }
+            .p1{
+                flex-direction: column;
+            }
+            .map{
+                margin-left: 0;
+                margin-top: 30px;
+            }
+        }
+        @media screen and (max-width:770px){
+            .listing-grid{
+                grid-template-columns: repeat(2,1fr);
+            }
+            .gallery-slider > .current{
+                height: 75%;
+            }
+            .gallery-slider > .left{
+                height: 75%;
+                translate: -73% -50%;
+            }
+            .gallery-slider > .right{
+                height: 75%;
+                translate: 73% -50%;
+            }
+            .g-page{
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .video-con{
+                width: 100%;
+            }
+            .vp-features > p{
+                font-size: 9pt;
+            }
+        }
+        @media screen and (max-width:610px){
+            .list-name{
+                font-size: 14pt;
+            }
+            .price{
+                font-size: 18pt;
+            }
+            .price::after{
+                font-size: 16pt;
+            }
+            .list-info > em{
+                font-size: 11pt;
+            }
+            .vp-intro-img{
+                width: 500px;
+                height: 330px;
+                min-width: 0px;
+            }
+            .gallery-grid{
+                grid-template-columns: 1fr;
+            }
+            .vp-features{
+                grid-template-columns:repeat(2, 1fr);
+            }
+            .floor-plan{
+                width: 300px;
+                height: 300px;
+            }
+        }
+        @media screen and (max-width:510px){
+            .listing-grid{
+                grid-template-columns: repeat(1,1fr);
+                padding-right: 0em;
+            }
+            .list-name{
+                font-size: 17pt;
+            }
+            .price{
+                font-size: 20pt;
+            }
+            .price::after{
+                font-size: 18pt;
+            }
+            .list-info > em{
+                font-size: 12pt;
+            }
+            .vp-intro-img{
+                width: 380px;
+                height: 253px;
+            }
+            .viewport-sec{
+                padding: .5em;
+            }
+            .slider-button-con{
+                padding:0 1em;
+            }
+            .slider-button-con > button{
+                height: 60px;
+                font-size: 30pt;
+            }
+            .g-page{
+                grid-template-columns: repeat(1, 1fr);
+            }
+            .vp-features{
+                width: 100%;
+            }
+            .tb{
+                width: 100%;
+                padding: 0 .25em;
+
+            }
+            .map{
+                width: 100%;
+                aspect-ratio: 1/1;
+            }
+        }
+        @media screen and (max-width:400px){
+            .vp-intro-img{
+                width: 310px;
+                height: 205px;
+
+            }
+            .list-name{
+                font-size: 15pt;
+            }
+            .price{
+                font-size: 18pt;
+            }
+            .price::after{
+                font-size: 16pt;
+            }
+            .list-info > em{
+                font-size: 10pt;
+            }
+            .vp-name{
+                font-size: 27pt;
+            }
+            .vp-price{
+                font-size: 24pt;
+            }
+            .vp-price::before{
+                font-size: 10pt;
+            }
+            .vt{
+                font-size: 10pt;
+            }
+            .vp-features > p{
+                font-size: 8pt;
+            }
+            legend{
+                font-size: 15pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-con">
+            <div class="logo-img">
+                <img src="logomono.png" width="100%" height="100%">
+            </div>
+            <h1 class="logo-name">MB REALTORS</h1>
+        </div>
+
+        <div class="mob-menu-toggle" onclick="toggleMenu(menuStatus)">
+            <img src="menutoggle.png" width="100%" height="100%"> 
+        </div>
+
+        <div class="menu-con">
+            <a href="index.html" class="menu-item m1">HOME</a>
+            <a href="review.html" class="menu-item m2">REVIEWS</a>
+            <a href="about.html" class="menu-item m3">ABOUT</a>
+            <a href="contact.html" class="menu-item m4">CONTACT</a>
+            <a href="contact.html" class="sas menu-items">SCHEDULE A SHOWING</a>
+        </div>
+    </header>
+
+    <div class="mob-menu-con">
+        <div class="mob-menu">
+            <div class="mob-menu-close" >
+                <div class="close-img" onclick="toggleMenu(menuStatus)"><img src="menuclose.png" width="100%" height="100%"></div>
+            </div>
+            <a href="index.html" ><div class="">Home</div></a>
+            <a href="listings.html" ><div class="">Listings</div></a>
+            <a href="review.html" ><div class="">Reviews</div></a>
+            <a href="contact.html" ><div class="">Contact</div></a>
+            <a href="contact.html" ><div class="">Schedule a Showing</div></a>
+        </div>
+    </div>
+
+    <section class="viewport-sec none">
+        <div class="back-btn-con">
+            <button class="back-btn" onclick="toggleVP()"> &larr; Back</button>
+        </div>
+
+        <section class="vp-intro">
+            <div class="vp-intro-img"><img src="" alt=""></div>
+            <div class="vp-intro-info">
+                <p class="vp-name"></p>
+                <p class="vp-location">
+                    <em class="vp-city"></em>
+                </p>
+                <p class="vp-price">/p>
+                <div class="vp-feat">
+                    <div class="bed-con">
+                        <div class="feat-img"><img src="bedimg.png" alt="" width="100%" height="100%"></div>
+                        <p class="vp-bed"></p>
+                    </div>
+                    <div class="bath-con">
+                        <div class="feat-img"><img src="bathimg.png" alt="" width="100%" height="100%"></div>
+                        <p class="vp-bath"></p>
+                    </div>
+                    <div class="size-con">
+                        <div class="feat-img"><img src="sizeimg.png" alt="" width="100%" height="100%"></div>
+                        <p class="vp-size"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="gallery-sec">
+            <h1 class="g">Gallery</h1>
+            <div class="gallery-grid">
+                <div class="vp-living" data-title="Living Room"><img src="" alt="" width="100%" height="100%"></div>
+                <div class="vp-bedroom" data-title="Bedroom"><img src="" alt="" width="100%" height="100%"></div>
+                <div class="vp-kitchen" data-title="Kitchen"><img src="" alt="" width="100%" height="100%"></div>
+                <div class="vp-dining" data-title="Dining Room"><img src="" alt="" width="100%" height="100%"></div>
+            </div>
+
+            <div class="change-view-con" id="grid-view">
+                <button class="change-view sb" onclick="sliderDOMsInit(currentListingImgs)" data-title="Slider View"><img src="sliderbtn.png" alt=""></button>
+                <button class="change-view gb" onclick="gridDOMsInit(currentListingImgs)" data-title="Grid View"><img src="gridbtn.png" alt=""></button>
+            </div>
+            <h1 class="all-imgs">All Images <em class="img-counter">()</em></h1>
+            <div class="g-sec">
+                <div class="gallery-all gallery-slider slide ">  
+                </div>
+                <div class="slider-button-con ">
+                    <button class="prev-btn" onclick="moveLeft()">&lt;</button>
+                    <button class="next-btn" onclick="moveRight()">&gt;</button>
+                </div>
+                <div class="gallery-grid-disp grid none  " >
+                </div>  
+                <div class="grid-button-con none  ">
+                    <button class="gprev-btn g-btn" onclick="changePagePrev()">&lt;</button>
+                    <p class="current-no">1</p>
+                    <p class="of">of</p>
+                    <p class="pages">3</p>
+                    <button class="gnext-btn g-btn" onclick="changePageNext()">&gt;</button>
+                </div> 
+            </div>
+
+            <h2 class="vt">Take A Virtual Tour of the Property</h2>
+            <div class="video-con"><video src="" width="100%" height="100%" controls></video></div>
+        </section>
+                
+        <section class="prop-info-sec ">
+            <h1>Property Info</h1>
+            <div class="prop-info-con p1">
+                <div class="prop-info">
+                    <p class="pi-vp-name" data-title="Name :&nbsp;"></p>
+                    <p class="pi-vp-address" data-title="Location :&nbsp;"></p>
+                    <p class="pi-vp-price" data-title="Price : AED"></p>
+                    <p class="pi-vp-type" data-title="Property Type :&nbsp;"></p>
+                    <p class="pi-vp-year" data-title="Year Built : &nbsp;"></p>
+                    <p class="pi-vp-landsz" data-title="Land Size :&nbsp;"></p>
+                    <p class="pi-vp-furnish" data-title="Furnishing Status :&nbsp;"></p>
+                    <p class="pi-vp-parking" data-title="Parking Details :&nbsp;"></p>
+                    <p class="pi-vp-HOA" data-title="HOA Fees : AED"></p>
+                </div>
+                <div class="map">    
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus"
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        allowfullscreen="true"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+        <section class="prop-info-sec fp">
+            <div class="prop-info-con prop-deet-con tb" >
+                <div class="prop-info prop-deet">
+                    <h1>Floor Plan</h1>
+                    <div class="floor-plan"><img src="l1.webp" alt=""></div>
+                </div>
+            </div>
+        </section>
+        <section class="prop-info-sec feats-sec">
+            <div class="prop-info-con prop-deet-con tb">
+                <div class="prop-info prop-deet tb">
+                    <fieldset class="vp-features vp-interior-feat">   
+                    </fieldset>
+                    
+                    <fieldset class="vp-features vp-outdoor-feat">    
+                    </fieldset>
+                    
+                    <fieldset class="vp-features vp-kitchen-feat">    
+                    </fieldset>
+                    
+                    <fieldset class="vp-features vp-bathroom-feat">    
+                    </fieldset>
+                    
+                    <fieldset class="vp-features vp-exterior-feat">    
+                    </fieldset>
+                    
+                    <fieldset class="vp-features vp-ss">    
+                    </fieldset>
+                    
+                    <fieldset class="vp-features vp-energy">    
+                    </fieldset>
+                    
+                    <fieldset class="vp-features vp-community">    
+                    </fieldset>
+                    
+                </div>
+            </div>
+        </section>
+        <section class="vp-contact-sec">
+            <h1>Interested in this Property?</h1>
+            <h2>Contact Our Agent</h2>
+            <div class="vp-contact">
+                <div class="vp-contact-img"><img src="agt1.webp" alt="" height="100%" width="100%"></div>
+                <div class="vp-contact-txt">
+                    <h1>David Barnes - Licensed Agent</h1>
+                    <p class="cone" data-title="✉"> david@mbrealestate.com </p>
+                    <p class="conp" data-title="☎"> (561) 555-8954</p>
+                    <button class="con-agt-btn bt1">CONTACT DAVID</button>
+                </div>
+            </div>
+        </section>
+
+        
+    </section>
+
+    <section class="listing-sec ">
+
+        <div class="listing-grid">
+
+            <div class="listing" onclick="initProperty(this)">
+                <div class="list-img"><img src="l2.webp" alt=""></div>
+                <div class="list-name">Villa 22 Al Wasl</div>
+                <p class="location">
+                    <em class="city">Portland</em>
+                </p>
+                <p class="price">5,230,000</p>
+                <p class="list-info">
+                    <em class="bed">3</em> | 
+                    <em class="bath">3</em> | 
+                    <em class="size">2400</em>
+                </p>
+
+
+                <section class="vp-info none">
+                    <div class="imgs">
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img class="dining-pic" src="l2.webp" alt=""> </div>
+                        <div class=""> <img class="kitchen-pic" src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img class="living-pic" src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="bedroom-pic" src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="floor-plan-pic" src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                    </div>
+                    <div class="virtual-vid"><video src="samplevid.mp4"></video></div>
+                    <div class="li-prop-info">
+                        <div class="li-name">Lorem, ipsum dolor.</div>
+                        <div class="li-loc">23 Maplewood Drive, Kensington, London, W8 5EH, United Kingdom</div>
+                        <div class="li-price">124,000</div>
+                        <div class="li-type">Mansion</div>
+                        <div class="li-year">2001</div>
+                        <div class="li-land">1.3 acres</div>
+                        <div class="li-fur">Fully Furnished</div>
+                        <div class="li-parking">Garage</div>
+                        <div class="li-hoa">104/yr</div>
+                        <div class="map-link">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus</div>
+                    </div>
+                    <div class="feats">
+                        <div class="li-interior">
+                            <p>Open Concept Living</p>
+                            <p>Hardwood Flooring</p>
+                            <p>Vaulted Ceilings</p>
+                            <p>Walk-in Closets</p>
+                            <p>Fireplace (Gas/Wood)</p>
+                            <p>Smart Home Integration</p>
+                            <p>Recessed Lighting</p>
+                            <p>Custom Built-ins</p>
+                        </div>
+                        <div class="li-outdoor">
+                            <p>Swimming Pool</p>
+                            <p>In-Ground Pool</p>
+                            <p>Spacious Backyard</p>
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Covered Patio / Pergola</p>
+                            <p>Fire Pit</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Hot Tub / Spa</p>
+                            <p>Outdoor Lighting</p>
+                            <p>Automatic Sprinkler System</p>
+                            <p>Gated Entrance</p>
+                            <p>Detached Guest House</p>
+                            <p>Tree-Lined Driveway</p>
+                            <p>Balcony / Rooftop Deck</p>
+                            <p>Water Features (Fountain, Pond)</p>
+                            <p>Private Dock / Waterfront Access</p>
+                        </div>
+                        <div class="li-kitchen">
+                            <p>Granite Countertops</p>
+                            <p>Stainless Steel Appliances</p>
+                            <p>Kitchen Island with Seating</p>
+                            <p>Walk-in Pantry</p>
+                            <p>Double Oven</p>
+                            <p>Under-Cabinet Lighting</p>
+                            <p>Soft-Close Cabinets</p>
+                        </div>
+                        <div class="li-bathroom">
+                            <p>Double Vanity</p>
+                            <p>Soaking Tub</p>
+                            <p>Walk-in Shower with Glass Enclosure</p>
+                            <p>Heated Floors</p>
+                            <p>Luxury Spa Bath</p>
+                        </div>
+                        <div class="li-exterior">
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Deck / Patio</p>
+                            <p>In-Ground Pool</p>
+                            <p>Covered Porch</p>
+                        </div>
+                        <div class="li-ss">
+                            <p>Gated Community</p>
+                            <p>24/7 Security Surveillance</p>
+                            <p>Smart Door Locks</p>
+                            <p>Fire & Carbon Monoxide Detectors</p>
+                            <p>Motion Sensor Lighting</p>
+                        </div>
+                        <div class="li-energy">
+                            <p>Solar Panels</p>
+                            <p>Energy Star Appliances</p>
+                            <p>LED Lighting</p>
+                            <p>High-Efficiency HVAC System</p>
+                            <p>Tankless Water Heater</p>
+                        </div>
+                        <div class="li-community">
+                            <p>Clubhouse</p>
+                            <p>Fitness Center</p>
+                            <p>Swimming Pool</p>
+                            <p>Walking Trails</p>
+                            <p>Dog Park</p>
+                            <p>Playground</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <div class="listing" onclick="initProperty(this)">
+                <div class="list-img"><img src="l2.webp" alt=""></div>
+                <div class="list-name">77 Downtown Boulevard</div>
+                <p class="location">
+                    <em class="city">Portland</em>
+                </p>
+                <p class="price">3,990,000</p>
+                <p class="list-info">
+                    <em class="bed">3</em> | 
+                    <em class="bath">3</em> | 
+                    <em class="size">2400</em>
+                </p>
+
+
+                <section class="vp-info none">
+                    <div class="imgs">
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img class="dining-pic" src="l2.webp" alt=""> </div>
+                        <div class=""> <img class="kitchen-pic" src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img class="living-pic" src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="bedroom-pic" src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="floor-plan-pic" src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                    </div>
+                    <div class="virtual-vid"><video src="samplevid.mp4"></video></div>
+                    <div class="li-prop-info">
+                        <div class="li-name">Lorem, ipsum dolor.</div>
+                        <div class="li-loc">23 Maplewood Drive, Kensington, London, W8 5EH, United Kingdom</div>
+                        <div class="li-price">124,000</div>
+                        <div class="li-type">Mansion</div>
+                        <div class="li-year">2001</div>
+                        <div class="li-land">1.3 acres</div>
+                        <div class="li-fur">Fully Furnished</div>
+                        <div class="li-parking">Garage</div>
+                        <div class="li-hoa">104/yr</div>
+                        <div class="map-link">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus</div>
+                    </div>
+                    <div class="feats">
+                        <div class="li-interior">
+                            <p>Open Concept Living</p>
+                            <p>Hardwood Flooring</p>
+                            <p>Vaulted Ceilings</p>
+                            <p>Walk-in Closets</p>
+                            <p>Fireplace (Gas/Wood)</p>
+                            <p>Smart Home Integration</p>
+                            <p>Recessed Lighting</p>
+                            <p>Custom Built-ins</p>
+                        </div>
+                        <div class="li-outdoor">
+                            <p>Swimming Pool</p>
+                            <p>In-Ground Pool</p>
+                            <p>Spacious Backyard</p>
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Covered Patio / Pergola</p>
+                            <p>Fire Pit</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Hot Tub / Spa</p>
+                            <p>Outdoor Lighting</p>
+                            <p>Automatic Sprinkler System</p>
+                            <p>Gated Entrance</p>
+                            <p>Detached Guest House</p>
+                            <p>Tree-Lined Driveway</p>
+                            <p>Balcony / Rooftop Deck</p>
+                            <p>Water Features (Fountain, Pond)</p>
+                            <p>Private Dock / Waterfront Access</p>
+                        </div>
+                        <div class="li-kitchen">
+                            <p>Granite Countertops</p>
+                            <p>Stainless Steel Appliances</p>
+                            <p>Kitchen Island with Seating</p>
+                            <p>Walk-in Pantry</p>
+                            <p>Double Oven</p>
+                            <p>Under-Cabinet Lighting</p>
+                            <p>Soft-Close Cabinets</p>
+                        </div>
+                        <div class="li-bathroom">
+                            <p>Double Vanity</p>
+                            <p>Soaking Tub</p>
+                            <p>Walk-in Shower with Glass Enclosure</p>
+                            <p>Heated Floors</p>
+                            <p>Luxury Spa Bath</p>
+                        </div>
+                        <div class="li-exterior">
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Deck / Patio</p>
+                            <p>In-Ground Pool</p>
+                            <p>Covered Porch</p>
+                        </div>
+                        <div class="li-ss">
+                            <p>Gated Community</p>
+                            <p>24/7 Security Surveillance</p>
+                            <p>Smart Door Locks</p>
+                            <p>Fire & Carbon Monoxide Detectors</p>
+                            <p>Motion Sensor Lighting</p>
+                        </div>
+                        <div class="li-energy">
+                            <p>Solar Panels</p>
+                            <p>Energy Star Appliances</p>
+                            <p>LED Lighting</p>
+                            <p>High-Efficiency HVAC System</p>
+                            <p>Tankless Water Heater</p>
+                        </div>
+                        <div class="li-community">
+                            <p>Clubhouse</p>
+                            <p>Fitness Center</p>
+                            <p>Swimming Pool</p>
+                            <p>Walking Trails</p>
+                            <p>Dog Park</p>
+                            <p>Playground</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <div class="listing" onclick="initProperty(this)">
+                <div class="list-img"><img src="l2.webp" alt=""></div>
+                <div class="list-name">The 8 at Jumeirah</div>
+                <p class="location">
+                    <em class="city">Portland</em>
+                </p>
+                <p class="price">3,000,000</p>
+                <p class="list-info">
+                    <em class="bed">3</em> | 
+                    <em class="bath">3</em> | 
+                    <em class="size">2400</em>
+                </p>
+
+
+                <section class="vp-info none">
+                    <div class="imgs">
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img class="dining-pic" src="l2.webp" alt=""> </div>
+                        <div class=""> <img class="kitchen-pic" src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img class="living-pic" src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="bedroom-pic" src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="floor-plan-pic" src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                    </div>
+                    <div class="virtual-vid"><video src="samplevid.mp4"></video></div>
+                    <div class="li-prop-info">
+                        <div class="li-name">Lorem, ipsum dolor.</div>
+                        <div class="li-loc">23 Maplewood Drive, Kensington, London, W8 5EH, United Kingdom</div>
+                        <div class="li-price">124,000</div>
+                        <div class="li-type">Mansion</div>
+                        <div class="li-year">2001</div>
+                        <div class="li-land">1.3 acres</div>
+                        <div class="li-fur">Fully Furnished</div>
+                        <div class="li-parking">Garage</div>
+                        <div class="li-hoa">104/yr</div>
+                        <div class="map-link">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus</div>
+                    </div>
+                    <div class="feats">
+                        <div class="li-interior">
+                            <p>Open Concept Living</p>
+                            <p>Hardwood Flooring</p>
+                            <p>Vaulted Ceilings</p>
+                            <p>Walk-in Closets</p>
+                            <p>Fireplace (Gas/Wood)</p>
+                            <p>Smart Home Integration</p>
+                            <p>Recessed Lighting</p>
+                            <p>Custom Built-ins</p>
+                        </div>
+                        <div class="li-outdoor">
+                            <p>Swimming Pool</p>
+                            <p>In-Ground Pool</p>
+                            <p>Spacious Backyard</p>
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Covered Patio / Pergola</p>
+                            <p>Fire Pit</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Hot Tub / Spa</p>
+                            <p>Outdoor Lighting</p>
+                            <p>Automatic Sprinkler System</p>
+                            <p>Gated Entrance</p>
+                            <p>Detached Guest House</p>
+                            <p>Tree-Lined Driveway</p>
+                            <p>Balcony / Rooftop Deck</p>
+                            <p>Water Features (Fountain, Pond)</p>
+                            <p>Private Dock / Waterfront Access</p>
+                        </div>
+                        <div class="li-kitchen">
+                            <p>Granite Countertops</p>
+                            <p>Stainless Steel Appliances</p>
+                            <p>Kitchen Island with Seating</p>
+                            <p>Walk-in Pantry</p>
+                            <p>Double Oven</p>
+                            <p>Under-Cabinet Lighting</p>
+                            <p>Soft-Close Cabinets</p>
+                        </div>
+                        <div class="li-bathroom">
+                            <p>Double Vanity</p>
+                            <p>Soaking Tub</p>
+                            <p>Walk-in Shower with Glass Enclosure</p>
+                            <p>Heated Floors</p>
+                            <p>Luxury Spa Bath</p>
+                        </div>
+                        <div class="li-exterior">
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Deck / Patio</p>
+                            <p>In-Ground Pool</p>
+                            <p>Covered Porch</p>
+                        </div>
+                        <div class="li-ss">
+                            <p>Gated Community</p>
+                            <p>24/7 Security Surveillance</p>
+                            <p>Smart Door Locks</p>
+                            <p>Fire & Carbon Monoxide Detectors</p>
+                            <p>Motion Sensor Lighting</p>
+                        </div>
+                        <div class="li-energy">
+                            <p>Solar Panels</p>
+                            <p>Energy Star Appliances</p>
+                            <p>LED Lighting</p>
+                            <p>High-Efficiency HVAC System</p>
+                            <p>Tankless Water Heater</p>
+                        </div>
+                        <div class="li-community">
+                            <p>Clubhouse</p>
+                            <p>Fitness Center</p>
+                            <p>Swimming Pool</p>
+                            <p>Walking Trails</p>
+                            <p>Dog Park</p>
+                            <p>Playground</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="listing" onclick="initProperty(this)">
+                <div class="list-img"><img src="l2.webp" alt=""></div>
+                <div class="list-name">Skyline 23 Residences</div>
+                <p class="location">
+                    <em class="city">Portland</em>
+                </p>
+                <p class="price">4,290,000</p>
+                <p class="list-info">
+                    <em class="bed">3</em> | 
+                    <em class="bath">3</em> | 
+                    <em class="size">2400</em>
+                </p>
+
+
+                <section class="vp-info none">
+                    <div class="imgs">
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img class="dining-pic" src="l2.webp" alt=""> </div>
+                        <div class=""> <img class="kitchen-pic" src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img class="living-pic" src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="bedroom-pic" src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="floor-plan-pic" src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                    </div>
+                    <div class="virtual-vid"><video src="samplevid.mp4"></video></div>
+                    <div class="li-prop-info">
+                        <div class="li-name">Lorem, ipsum dolor.</div>
+                        <div class="li-loc">23 Maplewood Drive, Kensington, London, W8 5EH, United Kingdom</div>
+                        <div class="li-price">124,000</div>
+                        <div class="li-type">Mansion</div>
+                        <div class="li-year">2001</div>
+                        <div class="li-land">1.3 acres</div>
+                        <div class="li-fur">Fully Furnished</div>
+                        <div class="li-parking">Garage</div>
+                        <div class="li-hoa">104/yr</div>
+                        <div class="map-link">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus</div>
+                    </div>
+                    <div class="feats">
+                        <div class="li-interior">
+                            <p>Open Concept Living</p>
+                            <p>Hardwood Flooring</p>
+                            <p>Vaulted Ceilings</p>
+                            <p>Walk-in Closets</p>
+                            <p>Fireplace (Gas/Wood)</p>
+                            <p>Smart Home Integration</p>
+                            <p>Recessed Lighting</p>
+                            <p>Custom Built-ins</p>
+                        </div>
+                        <div class="li-outdoor">
+                            <p>Swimming Pool</p>
+                            <p>In-Ground Pool</p>
+                            <p>Spacious Backyard</p>
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Covered Patio / Pergola</p>
+                            <p>Fire Pit</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Hot Tub / Spa</p>
+                            <p>Outdoor Lighting</p>
+                            <p>Automatic Sprinkler System</p>
+                            <p>Gated Entrance</p>
+                            <p>Detached Guest House</p>
+                            <p>Tree-Lined Driveway</p>
+                            <p>Balcony / Rooftop Deck</p>
+                            <p>Water Features (Fountain, Pond)</p>
+                            <p>Private Dock / Waterfront Access</p>
+                        </div>
+                        <div class="li-kitchen">
+                            <p>Granite Countertops</p>
+                            <p>Stainless Steel Appliances</p>
+                            <p>Kitchen Island with Seating</p>
+                            <p>Walk-in Pantry</p>
+                            <p>Double Oven</p>
+                            <p>Under-Cabinet Lighting</p>
+                            <p>Soft-Close Cabinets</p>
+                        </div>
+                        <div class="li-bathroom">
+                            <p>Double Vanity</p>
+                            <p>Soaking Tub</p>
+                            <p>Walk-in Shower with Glass Enclosure</p>
+                            <p>Heated Floors</p>
+                            <p>Luxury Spa Bath</p>
+                        </div>
+                        <div class="li-exterior">
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Deck / Patio</p>
+                            <p>In-Ground Pool</p>
+                            <p>Covered Porch</p>
+                        </div>
+                        <div class="li-ss">
+                            <p>Gated Community</p>
+                            <p>24/7 Security Surveillance</p>
+                            <p>Smart Door Locks</p>
+                            <p>Fire & Carbon Monoxide Detectors</p>
+                            <p>Motion Sensor Lighting</p>
+                        </div>
+                        <div class="li-energy">
+                            <p>Solar Panels</p>
+                            <p>Energy Star Appliances</p>
+                            <p>LED Lighting</p>
+                            <p>High-Efficiency HVAC System</p>
+                            <p>Tankless Water Heater</p>
+                        </div>
+                        <div class="li-community">
+                            <p>Clubhouse</p>
+                            <p>Fitness Center</p>
+                            <p>Swimming Pool</p>
+                            <p>Walking Trails</p>
+                            <p>Dog Park</p>
+                            <p>Playground</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="listing" onclick="initProperty(this)">
+                <div class="list-img"><img src="l2.webp" alt=""></div>
+                <div class="list-name">Maison 99 Emirates Hills </div>
+                <p class="location">
+                    <em class="city">Deira</em>
+                </p>
+                <p class="price">2,230,000</p>
+                <p class="list-info">
+                    <em class="bed">3</em> | 
+                    <em class="bath">3</em> | 
+                    <em class="size">2400</em>
+                </p>
+
+
+                <section class="vp-info none">
+                    <div class="imgs">
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img class="dining-pic" src="l2.webp" alt=""> </div>
+                        <div class=""> <img class="kitchen-pic" src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img class="living-pic" src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="bedroom-pic" src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="floor-plan-pic" src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                    </div>
+                    <div class="virtual-vid"><video src="samplevid.mp4"></video></div>
+                    <div class="li-prop-info">
+                        <div class="li-name">Lorem, ipsum dolor.</div>
+                        <div class="li-loc">23 Maplewood Drive, Kensington, London, W8 5EH, United Kingdom</div>
+                        <div class="li-price">124,000</div>
+                        <div class="li-type">Mansion</div>
+                        <div class="li-year">2001</div>
+                        <div class="li-land">1.3 acres</div>
+                        <div class="li-fur">Fully Furnished</div>
+                        <div class="li-parking">Garage</div>
+                        <div class="li-hoa">104/yr</div>
+                        <div class="map-link">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus</div>
+                    </div>
+                    <div class="feats">
+                        <div class="li-interior">
+                            <p>Open Concept Living</p>
+                            <p>Hardwood Flooring</p>
+                            <p>Vaulted Ceilings</p>
+                            <p>Walk-in Closets</p>
+                            <p>Fireplace (Gas/Wood)</p>
+                            <p>Smart Home Integration</p>
+                            <p>Recessed Lighting</p>
+                            <p>Custom Built-ins</p>
+                        </div>
+                        <div class="li-outdoor">
+                            <p>Swimming Pool</p>
+                            <p>In-Ground Pool</p>
+                            <p>Spacious Backyard</p>
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Covered Patio / Pergola</p>
+                            <p>Fire Pit</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Hot Tub / Spa</p>
+                            <p>Outdoor Lighting</p>
+                            <p>Automatic Sprinkler System</p>
+                            <p>Gated Entrance</p>
+                            <p>Detached Guest House</p>
+                            <p>Tree-Lined Driveway</p>
+                            <p>Balcony / Rooftop Deck</p>
+                            <p>Water Features (Fountain, Pond)</p>
+                            <p>Private Dock / Waterfront Access</p>
+                        </div>
+                        <div class="li-kitchen">
+                            <p>Granite Countertops</p>
+                            <p>Stainless Steel Appliances</p>
+                            <p>Kitchen Island with Seating</p>
+                            <p>Walk-in Pantry</p>
+                            <p>Double Oven</p>
+                            <p>Under-Cabinet Lighting</p>
+                            <p>Soft-Close Cabinets</p>
+                        </div>
+                        <div class="li-bathroom">
+                            <p>Double Vanity</p>
+                            <p>Soaking Tub</p>
+                            <p>Walk-in Shower with Glass Enclosure</p>
+                            <p>Heated Floors</p>
+                            <p>Luxury Spa Bath</p>
+                        </div>
+                        <div class="li-exterior">
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Deck / Patio</p>
+                            <p>In-Ground Pool</p>
+                            <p>Covered Porch</p>
+                        </div>
+                        <div class="li-ss">
+                            <p>Gated Community</p>
+                            <p>24/7 Security Surveillance</p>
+                            <p>Smart Door Locks</p>
+                            <p>Fire & Carbon Monoxide Detectors</p>
+                            <p>Motion Sensor Lighting</p>
+                        </div>
+                        <div class="li-energy">
+                            <p>Solar Panels</p>
+                            <p>Energy Star Appliances</p>
+                            <p>LED Lighting</p>
+                            <p>High-Efficiency HVAC System</p>
+                            <p>Tankless Water Heater</p>
+                        </div>
+                        <div class="li-community">
+                            <p>Clubhouse</p>
+                            <p>Fitness Center</p>
+                            <p>Swimming Pool</p>
+                            <p>Walking Trails</p>
+                            <p>Dog Park</p>
+                            <p>Playground</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="listing" onclick="initProperty(this)">
+                <div class="list-img"><img src="l2.webp" alt=""></div>
+                <div class="list-name">Maison 99 Emirates Hills </div>
+                <p class="location">
+                    <em class="city">Deira</em>
+                </p>
+                <p class="price">2,230,000</p>
+                <p class="list-info">
+                    <em class="bed">3</em> | 
+                    <em class="bath">3</em> | 
+                    <em class="size">2400</em>
+                </p>
+
+
+                <section class="vp-info none">
+                    <div class="imgs">
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img class="dining-pic" src="l2.webp" alt=""> </div>
+                        <div class=""> <img class="kitchen-pic" src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img class="living-pic" src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="bedroom-pic" src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="floor-plan-pic" src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                    </div>
+                    <div class="virtual-vid"><video src="samplevid.mp4"></video></div>
+                    <div class="li-prop-info">
+                        <div class="li-name">Lorem, ipsum dolor.</div>
+                        <div class="li-loc">23 Maplewood Drive, Kensington, London, W8 5EH, United Kingdom</div>
+                        <div class="li-price">124,000</div>
+                        <div class="li-type">Mansion</div>
+                        <div class="li-year">2001</div>
+                        <div class="li-land">1.3 acres</div>
+                        <div class="li-fur">Fully Furnished</div>
+                        <div class="li-parking">Garage</div>
+                        <div class="li-hoa">104/yr</div>
+                        <div class="map-link">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus</div>
+                    </div>
+                    <div class="feats">
+                        <div class="li-interior">
+                            <p>Open Concept Living</p>
+                            <p>Hardwood Flooring</p>
+                            <p>Vaulted Ceilings</p>
+                            <p>Walk-in Closets</p>
+                            <p>Fireplace (Gas/Wood)</p>
+                            <p>Smart Home Integration</p>
+                            <p>Recessed Lighting</p>
+                            <p>Custom Built-ins</p>
+                        </div>
+                        <div class="li-outdoor">
+                            <p>Swimming Pool</p>
+                            <p>In-Ground Pool</p>
+                            <p>Spacious Backyard</p>
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Covered Patio / Pergola</p>
+                            <p>Fire Pit</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Hot Tub / Spa</p>
+                            <p>Outdoor Lighting</p>
+                            <p>Automatic Sprinkler System</p>
+                            <p>Gated Entrance</p>
+                            <p>Detached Guest House</p>
+                            <p>Tree-Lined Driveway</p>
+                            <p>Balcony / Rooftop Deck</p>
+                            <p>Water Features (Fountain, Pond)</p>
+                            <p>Private Dock / Waterfront Access</p>
+                        </div>
+                        <div class="li-kitchen">
+                            <p>Granite Countertops</p>
+                            <p>Stainless Steel Appliances</p>
+                            <p>Kitchen Island with Seating</p>
+                            <p>Walk-in Pantry</p>
+                            <p>Double Oven</p>
+                            <p>Under-Cabinet Lighting</p>
+                            <p>Soft-Close Cabinets</p>
+                        </div>
+                        <div class="li-bathroom">
+                            <p>Double Vanity</p>
+                            <p>Soaking Tub</p>
+                            <p>Walk-in Shower with Glass Enclosure</p>
+                            <p>Heated Floors</p>
+                            <p>Luxury Spa Bath</p>
+                        </div>
+                        <div class="li-exterior">
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Deck / Patio</p>
+                            <p>In-Ground Pool</p>
+                            <p>Covered Porch</p>
+                        </div>
+                        <div class="li-ss">
+                            <p>Gated Community</p>
+                            <p>24/7 Security Surveillance</p>
+                            <p>Smart Door Locks</p>
+                            <p>Fire & Carbon Monoxide Detectors</p>
+                            <p>Motion Sensor Lighting</p>
+                        </div>
+                        <div class="li-energy">
+                            <p>Solar Panels</p>
+                            <p>Energy Star Appliances</p>
+                            <p>LED Lighting</p>
+                            <p>High-Efficiency HVAC System</p>
+                            <p>Tankless Water Heater</p>
+                        </div>
+                        <div class="li-community">
+                            <p>Clubhouse</p>
+                            <p>Fitness Center</p>
+                            <p>Swimming Pool</p>
+                            <p>Walking Trails</p>
+                            <p>Dog Park</p>
+                            <p>Playground</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="listing" onclick="initProperty(this)">
+                <div class="list-img"><img src="l2.webp" alt=""></div>
+                <div class="list-name">Maison 99 Emirates Hills </div>
+                <p class="location">
+                    <em class="city">Deira</em>
+                </p>
+                <p class="price">2,230,000</p>
+                <p class="list-info">
+                    <em class="bed">3</em> | 
+                    <em class="bath">3</em> | 
+                    <em class="size">2400</em>
+                </p>
+
+
+                <section class="vp-info none">
+                    <div class="imgs">
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img class="dining-pic" src="l2.webp" alt=""> </div>
+                        <div class=""> <img class="kitchen-pic" src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img class="living-pic" src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="bedroom-pic" src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="floor-plan-pic" src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                    </div>
+                    <div class="virtual-vid"><video src="samplevid.mp4"></video></div>
+                    <div class="li-prop-info">
+                        <div class="li-name">Lorem, ipsum dolor.</div>
+                        <div class="li-loc">23 Maplewood Drive, Kensington, London, W8 5EH, United Kingdom</div>
+                        <div class="li-price">124,000</div>
+                        <div class="li-type">Mansion</div>
+                        <div class="li-year">2001</div>
+                        <div class="li-land">1.3 acres</div>
+                        <div class="li-fur">Fully Furnished</div>
+                        <div class="li-parking">Garage</div>
+                        <div class="li-hoa">104/yr</div>
+                        <div class="map-link">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus</div>
+                    </div>
+                    <div class="feats">
+                        <div class="li-interior">
+                            <p>Open Concept Living</p>
+                            <p>Hardwood Flooring</p>
+                            <p>Vaulted Ceilings</p>
+                            <p>Walk-in Closets</p>
+                            <p>Fireplace (Gas/Wood)</p>
+                            <p>Smart Home Integration</p>
+                            <p>Recessed Lighting</p>
+                            <p>Custom Built-ins</p>
+                        </div>
+                        <div class="li-outdoor">
+                            <p>Swimming Pool</p>
+                            <p>In-Ground Pool</p>
+                            <p>Spacious Backyard</p>
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Covered Patio / Pergola</p>
+                            <p>Fire Pit</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Hot Tub / Spa</p>
+                            <p>Outdoor Lighting</p>
+                            <p>Automatic Sprinkler System</p>
+                            <p>Gated Entrance</p>
+                            <p>Detached Guest House</p>
+                            <p>Tree-Lined Driveway</p>
+                            <p>Balcony / Rooftop Deck</p>
+                            <p>Water Features (Fountain, Pond)</p>
+                            <p>Private Dock / Waterfront Access</p>
+                        </div>
+                        <div class="li-kitchen">
+                            <p>Granite Countertops</p>
+                            <p>Stainless Steel Appliances</p>
+                            <p>Kitchen Island with Seating</p>
+                            <p>Walk-in Pantry</p>
+                            <p>Double Oven</p>
+                            <p>Under-Cabinet Lighting</p>
+                            <p>Soft-Close Cabinets</p>
+                        </div>
+                        <div class="li-bathroom">
+                            <p>Double Vanity</p>
+                            <p>Soaking Tub</p>
+                            <p>Walk-in Shower with Glass Enclosure</p>
+                            <p>Heated Floors</p>
+                            <p>Luxury Spa Bath</p>
+                        </div>
+                        <div class="li-exterior">
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Deck / Patio</p>
+                            <p>In-Ground Pool</p>
+                            <p>Covered Porch</p>
+                        </div>
+                        <div class="li-ss">
+                            <p>Gated Community</p>
+                            <p>24/7 Security Surveillance</p>
+                            <p>Smart Door Locks</p>
+                            <p>Fire & Carbon Monoxide Detectors</p>
+                            <p>Motion Sensor Lighting</p>
+                        </div>
+                        <div class="li-energy">
+                            <p>Solar Panels</p>
+                            <p>Energy Star Appliances</p>
+                            <p>LED Lighting</p>
+                            <p>High-Efficiency HVAC System</p>
+                            <p>Tankless Water Heater</p>
+                        </div>
+                        <div class="li-community">
+                            <p>Clubhouse</p>
+                            <p>Fitness Center</p>
+                            <p>Swimming Pool</p>
+                            <p>Walking Trails</p>
+                            <p>Dog Park</p>
+                            <p>Playground</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="listing" onclick="initProperty(this)">
+                <div class="list-img"><img src="l2.webp" alt=""></div>
+                <div class="list-name">Maison 99 Emirates Hills </div>
+                <p class="location">
+                    <em class="city">Deira</em>
+                </p>
+                <p class="price">2,230,000</p>
+                <p class="list-info">
+                    <em class="bed">3</em> | 
+                    <em class="bath">3</em> | 
+                    <em class="size">2400</em>
+                </p>
+
+
+                <section class="vp-info none">
+                    <div class="imgs">
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img class="dining-pic" src="l2.webp" alt=""> </div>
+                        <div class=""> <img class="kitchen-pic" src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img class="living-pic" src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="bedroom-pic" src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="floor-plan-pic" src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                    </div>
+                    <div class="virtual-vid"><video src="samplevid.mp4"></video></div>
+                    <div class="li-prop-info">
+                        <div class="li-name">Lorem, ipsum dolor.</div>
+                        <div class="li-loc">23 Maplewood Drive, Kensington, London, W8 5EH, United Kingdom</div>
+                        <div class="li-price">124,000</div>
+                        <div class="li-type">Mansion</div>
+                        <div class="li-year">2001</div>
+                        <div class="li-land">1.3 acres</div>
+                        <div class="li-fur">Fully Furnished</div>
+                        <div class="li-parking">Garage</div>
+                        <div class="li-hoa">104/yr</div>
+                        <div class="map-link">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus</div>
+                    </div>
+                    <div class="feats">
+                        <div class="li-interior">
+                            <p>Open Concept Living</p>
+                            <p>Hardwood Flooring</p>
+                            <p>Vaulted Ceilings</p>
+                            <p>Walk-in Closets</p>
+                            <p>Fireplace (Gas/Wood)</p>
+                            <p>Smart Home Integration</p>
+                            <p>Recessed Lighting</p>
+                            <p>Custom Built-ins</p>
+                        </div>
+                        <div class="li-outdoor">
+                            <p>Swimming Pool</p>
+                            <p>In-Ground Pool</p>
+                            <p>Spacious Backyard</p>
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Covered Patio / Pergola</p>
+                            <p>Fire Pit</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Hot Tub / Spa</p>
+                            <p>Outdoor Lighting</p>
+                            <p>Automatic Sprinkler System</p>
+                            <p>Gated Entrance</p>
+                            <p>Detached Guest House</p>
+                            <p>Tree-Lined Driveway</p>
+                            <p>Balcony / Rooftop Deck</p>
+                            <p>Water Features (Fountain, Pond)</p>
+                            <p>Private Dock / Waterfront Access</p>
+                        </div>
+                        <div class="li-kitchen">
+                            <p>Granite Countertops</p>
+                            <p>Stainless Steel Appliances</p>
+                            <p>Kitchen Island with Seating</p>
+                            <p>Walk-in Pantry</p>
+                            <p>Double Oven</p>
+                            <p>Under-Cabinet Lighting</p>
+                            <p>Soft-Close Cabinets</p>
+                        </div>
+                        <div class="li-bathroom">
+                            <p>Double Vanity</p>
+                            <p>Soaking Tub</p>
+                            <p>Walk-in Shower with Glass Enclosure</p>
+                            <p>Heated Floors</p>
+                            <p>Luxury Spa Bath</p>
+                        </div>
+                        <div class="li-exterior">
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Deck / Patio</p>
+                            <p>In-Ground Pool</p>
+                            <p>Covered Porch</p>
+                        </div>
+                        <div class="li-ss">
+                            <p>Gated Community</p>
+                            <p>24/7 Security Surveillance</p>
+                            <p>Smart Door Locks</p>
+                            <p>Fire & Carbon Monoxide Detectors</p>
+                            <p>Motion Sensor Lighting</p>
+                        </div>
+                        <div class="li-energy">
+                            <p>Solar Panels</p>
+                            <p>Energy Star Appliances</p>
+                            <p>LED Lighting</p>
+                            <p>High-Efficiency HVAC System</p>
+                            <p>Tankless Water Heater</p>
+                        </div>
+                        <div class="li-community">
+                            <p>Clubhouse</p>
+                            <p>Fitness Center</p>
+                            <p>Swimming Pool</p>
+                            <p>Walking Trails</p>
+                            <p>Dog Park</p>
+                            <p>Playground</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="listing" onclick="initProperty(this)">
+                <div class="list-img"><img src="l2.webp" alt=""></div>
+                <div class="list-name">Maison 99 Emirates Hills </div>
+                <p class="location">
+                    <em class="city">Deira</em>
+                </p>
+                <p class="price">2,230,000</p>
+                <p class="list-info">
+                    <em class="bed">3</em> | 
+                    <em class="bath">3</em> | 
+                    <em class="size">2400</em>
+                </p>
+
+
+                <section class="vp-info none">
+                    <div class="imgs">
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img class="dining-pic" src="l2.webp" alt=""> </div>
+                        <div class=""> <img class="kitchen-pic" src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img class="living-pic" src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="bedroom-pic" src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="floor-plan-pic" src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                    </div>
+                    <div class="virtual-vid"><video src="samplevid.mp4"></video></div>
+                    <div class="li-prop-info">
+                        <div class="li-name">Lorem, ipsum dolor.</div>
+                        <div class="li-loc">23 Maplewood Drive, Kensington, London, W8 5EH, United Kingdom</div>
+                        <div class="li-price">124,000</div>
+                        <div class="li-type">Mansion</div>
+                        <div class="li-year">2001</div>
+                        <div class="li-land">1.3 acres</div>
+                        <div class="li-fur">Fully Furnished</div>
+                        <div class="li-parking">Garage</div>
+                        <div class="li-hoa">104/yr</div>
+                        <div class="map-link">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus</div>
+                    </div>
+                    <div class="feats">
+                        <div class="li-interior">
+                            <p>Open Concept Living</p>
+                            <p>Hardwood Flooring</p>
+                            <p>Vaulted Ceilings</p>
+                            <p>Walk-in Closets</p>
+                            <p>Fireplace (Gas/Wood)</p>
+                            <p>Smart Home Integration</p>
+                            <p>Recessed Lighting</p>
+                            <p>Custom Built-ins</p>
+                        </div>
+                        <div class="li-outdoor">
+                            <p>Swimming Pool</p>
+                            <p>In-Ground Pool</p>
+                            <p>Spacious Backyard</p>
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Covered Patio / Pergola</p>
+                            <p>Fire Pit</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Hot Tub / Spa</p>
+                            <p>Outdoor Lighting</p>
+                            <p>Automatic Sprinkler System</p>
+                            <p>Gated Entrance</p>
+                            <p>Detached Guest House</p>
+                            <p>Tree-Lined Driveway</p>
+                            <p>Balcony / Rooftop Deck</p>
+                            <p>Water Features (Fountain, Pond)</p>
+                            <p>Private Dock / Waterfront Access</p>
+                        </div>
+                        <div class="li-kitchen">
+                            <p>Granite Countertops</p>
+                            <p>Stainless Steel Appliances</p>
+                            <p>Kitchen Island with Seating</p>
+                            <p>Walk-in Pantry</p>
+                            <p>Double Oven</p>
+                            <p>Under-Cabinet Lighting</p>
+                            <p>Soft-Close Cabinets</p>
+                        </div>
+                        <div class="li-bathroom">
+                            <p>Double Vanity</p>
+                            <p>Soaking Tub</p>
+                            <p>Walk-in Shower with Glass Enclosure</p>
+                            <p>Heated Floors</p>
+                            <p>Luxury Spa Bath</p>
+                        </div>
+                        <div class="li-exterior">
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Deck / Patio</p>
+                            <p>In-Ground Pool</p>
+                            <p>Covered Porch</p>
+                        </div>
+                        <div class="li-ss">
+                            <p>Gated Community</p>
+                            <p>24/7 Security Surveillance</p>
+                            <p>Smart Door Locks</p>
+                            <p>Fire & Carbon Monoxide Detectors</p>
+                            <p>Motion Sensor Lighting</p>
+                        </div>
+                        <div class="li-energy">
+                            <p>Solar Panels</p>
+                            <p>Energy Star Appliances</p>
+                            <p>LED Lighting</p>
+                            <p>High-Efficiency HVAC System</p>
+                            <p>Tankless Water Heater</p>
+                        </div>
+                        <div class="li-community">
+                            <p>Clubhouse</p>
+                            <p>Fitness Center</p>
+                            <p>Swimming Pool</p>
+                            <p>Walking Trails</p>
+                            <p>Dog Park</p>
+                            <p>Playground</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="listing" onclick="initProperty(this)">
+                <div class="list-img"><img src="l2.webp" alt=""></div>
+                <div class="list-name">Maison 99 Emirates Hills </div>
+                <p class="location">
+                    <em class="city">Deira</em>
+                </p>
+                <p class="price">2,230,000</p>
+                <p class="list-info">
+                    <em class="bed">3</em> | 
+                    <em class="bath">3</em> | 
+                    <em class="size">2400</em>
+                </p>
+
+
+                <section class="vp-info none">
+                    <div class="imgs">
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img class="dining-pic" src="l2.webp" alt=""> </div>
+                        <div class=""> <img class="kitchen-pic" src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img class="living-pic" src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="bedroom-pic" src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="floor-plan-pic" src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                    </div>
+                    <div class="virtual-vid"><video src="samplevid.mp4"></video></div>
+                    <div class="li-prop-info">
+                        <div class="li-name">Lorem, ipsum dolor.</div>
+                        <div class="li-loc">23 Maplewood Drive, Kensington, London, W8 5EH, United Kingdom</div>
+                        <div class="li-price">124,000</div>
+                        <div class="li-type">Mansion</div>
+                        <div class="li-year">2001</div>
+                        <div class="li-land">1.3 acres</div>
+                        <div class="li-fur">Fully Furnished</div>
+                        <div class="li-parking">Garage</div>
+                        <div class="li-hoa">104/yr</div>
+                        <div class="map-link">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus</div>
+                    </div>
+                    <div class="feats">
+                        <div class="li-interior">
+                            <p>Open Concept Living</p>
+                            <p>Hardwood Flooring</p>
+                            <p>Vaulted Ceilings</p>
+                            <p>Walk-in Closets</p>
+                            <p>Fireplace (Gas/Wood)</p>
+                            <p>Smart Home Integration</p>
+                            <p>Recessed Lighting</p>
+                            <p>Custom Built-ins</p>
+                        </div>
+                        <div class="li-outdoor">
+                            <p>Swimming Pool</p>
+                            <p>In-Ground Pool</p>
+                            <p>Spacious Backyard</p>
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Covered Patio / Pergola</p>
+                            <p>Fire Pit</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Hot Tub / Spa</p>
+                            <p>Outdoor Lighting</p>
+                            <p>Automatic Sprinkler System</p>
+                            <p>Gated Entrance</p>
+                            <p>Detached Guest House</p>
+                            <p>Tree-Lined Driveway</p>
+                            <p>Balcony / Rooftop Deck</p>
+                            <p>Water Features (Fountain, Pond)</p>
+                            <p>Private Dock / Waterfront Access</p>
+                        </div>
+                        <div class="li-kitchen">
+                            <p>Granite Countertops</p>
+                            <p>Stainless Steel Appliances</p>
+                            <p>Kitchen Island with Seating</p>
+                            <p>Walk-in Pantry</p>
+                            <p>Double Oven</p>
+                            <p>Under-Cabinet Lighting</p>
+                            <p>Soft-Close Cabinets</p>
+                        </div>
+                        <div class="li-bathroom">
+                            <p>Double Vanity</p>
+                            <p>Soaking Tub</p>
+                            <p>Walk-in Shower with Glass Enclosure</p>
+                            <p>Heated Floors</p>
+                            <p>Luxury Spa Bath</p>
+                        </div>
+                        <div class="li-exterior">
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Deck / Patio</p>
+                            <p>In-Ground Pool</p>
+                            <p>Covered Porch</p>
+                        </div>
+                        <div class="li-ss">
+                            <p>Gated Community</p>
+                            <p>24/7 Security Surveillance</p>
+                            <p>Smart Door Locks</p>
+                            <p>Fire & Carbon Monoxide Detectors</p>
+                            <p>Motion Sensor Lighting</p>
+                        </div>
+                        <div class="li-energy">
+                            <p>Solar Panels</p>
+                            <p>Energy Star Appliances</p>
+                            <p>LED Lighting</p>
+                            <p>High-Efficiency HVAC System</p>
+                            <p>Tankless Water Heater</p>
+                        </div>
+                        <div class="li-community">
+                            <p>Clubhouse</p>
+                            <p>Fitness Center</p>
+                            <p>Swimming Pool</p>
+                            <p>Walking Trails</p>
+                            <p>Dog Park</p>
+                            <p>Playground</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="listing" onclick="initProperty(this)">
+                <div class="list-img"><img src="l2.webp" alt=""></div>
+                <div class="list-name">Maison 99 Emirates Hills </div>
+                <p class="location">
+                    <em class="city">Deira</em>
+                </p>
+                <p class="price">2,230,000</p>
+                <p class="list-info">
+                    <em class="bed">3</em> | 
+                    <em class="bath">3</em> | 
+                    <em class="size">2400</em>
+                </p>
+
+
+                <section class="vp-info none">
+                    <div class="imgs">
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img class="dining-pic" src="l2.webp" alt=""> </div>
+                        <div class=""> <img class="kitchen-pic" src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img class="living-pic" src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="bedroom-pic" src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="floor-plan-pic" src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                    </div>
+                    <div class="virtual-vid"><video src="samplevid.mp4"></video></div>
+                    <div class="li-prop-info">
+                        <div class="li-name">Lorem, ipsum dolor.</div>
+                        <div class="li-loc">23 Maplewood Drive, Kensington, London, W8 5EH, United Kingdom</div>
+                        <div class="li-price">124,000</div>
+                        <div class="li-type">Mansion</div>
+                        <div class="li-year">2001</div>
+                        <div class="li-land">1.3 acres</div>
+                        <div class="li-fur">Fully Furnished</div>
+                        <div class="li-parking">Garage</div>
+                        <div class="li-hoa">104/yr</div>
+                        <div class="map-link">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus</div>
+                    </div>
+                    <div class="feats">
+                        <div class="li-interior">
+                            <p>Open Concept Living</p>
+                            <p>Hardwood Flooring</p>
+                            <p>Vaulted Ceilings</p>
+                            <p>Walk-in Closets</p>
+                            <p>Fireplace (Gas/Wood)</p>
+                            <p>Smart Home Integration</p>
+                            <p>Recessed Lighting</p>
+                            <p>Custom Built-ins</p>
+                        </div>
+                        <div class="li-outdoor">
+                            <p>Swimming Pool</p>
+                            <p>In-Ground Pool</p>
+                            <p>Spacious Backyard</p>
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Covered Patio / Pergola</p>
+                            <p>Fire Pit</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Hot Tub / Spa</p>
+                            <p>Outdoor Lighting</p>
+                            <p>Automatic Sprinkler System</p>
+                            <p>Gated Entrance</p>
+                            <p>Detached Guest House</p>
+                            <p>Tree-Lined Driveway</p>
+                            <p>Balcony / Rooftop Deck</p>
+                            <p>Water Features (Fountain, Pond)</p>
+                            <p>Private Dock / Waterfront Access</p>
+                        </div>
+                        <div class="li-kitchen">
+                            <p>Granite Countertops</p>
+                            <p>Stainless Steel Appliances</p>
+                            <p>Kitchen Island with Seating</p>
+                            <p>Walk-in Pantry</p>
+                            <p>Double Oven</p>
+                            <p>Under-Cabinet Lighting</p>
+                            <p>Soft-Close Cabinets</p>
+                        </div>
+                        <div class="li-bathroom">
+                            <p>Double Vanity</p>
+                            <p>Soaking Tub</p>
+                            <p>Walk-in Shower with Glass Enclosure</p>
+                            <p>Heated Floors</p>
+                            <p>Luxury Spa Bath</p>
+                        </div>
+                        <div class="li-exterior">
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Deck / Patio</p>
+                            <p>In-Ground Pool</p>
+                            <p>Covered Porch</p>
+                        </div>
+                        <div class="li-ss">
+                            <p>Gated Community</p>
+                            <p>24/7 Security Surveillance</p>
+                            <p>Smart Door Locks</p>
+                            <p>Fire & Carbon Monoxide Detectors</p>
+                            <p>Motion Sensor Lighting</p>
+                        </div>
+                        <div class="li-energy">
+                            <p>Solar Panels</p>
+                            <p>Energy Star Appliances</p>
+                            <p>LED Lighting</p>
+                            <p>High-Efficiency HVAC System</p>
+                            <p>Tankless Water Heater</p>
+                        </div>
+                        <div class="li-community">
+                            <p>Clubhouse</p>
+                            <p>Fitness Center</p>
+                            <p>Swimming Pool</p>
+                            <p>Walking Trails</p>
+                            <p>Dog Park</p>
+                            <p>Playground</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="listing" onclick="initProperty(this)">
+                <div class="list-img"><img src="l2.webp" alt=""></div>
+                <div class="list-name">Maison 99 Emirates Hills </div>
+                <p class="location">
+                    <em class="city">Deira</em>
+                </p>
+                <p class="price">2,230,000</p>
+                <p class="list-info">
+                    <em class="bed">3</em> | 
+                    <em class="bath">3</em> | 
+                    <em class="size">2400</em>
+                </p>
+
+
+                <section class="vp-info none">
+                    <div class="imgs">
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img class="dining-pic" src="l2.webp" alt=""> </div>
+                        <div class=""> <img class="kitchen-pic" src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img class="living-pic" src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="bedroom-pic" src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="floor-plan-pic" src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                    </div>
+                    <div class="virtual-vid"><video src="samplevid.mp4"></video></div>
+                    <div class="li-prop-info">
+                        <div class="li-name">Lorem, ipsum dolor.</div>
+                        <div class="li-loc">23 Maplewood Drive, Kensington, London, W8 5EH, United Kingdom</div>
+                        <div class="li-price">124,000</div>
+                        <div class="li-type">Mansion</div>
+                        <div class="li-year">2001</div>
+                        <div class="li-land">1.3 acres</div>
+                        <div class="li-fur">Fully Furnished</div>
+                        <div class="li-parking">Garage</div>
+                        <div class="li-hoa">104/yr</div>
+                        <div class="map-link">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus</div>
+                    </div>
+                    <div class="feats">
+                        <div class="li-interior">
+                            <p>Open Concept Living</p>
+                            <p>Hardwood Flooring</p>
+                            <p>Vaulted Ceilings</p>
+                            <p>Walk-in Closets</p>
+                            <p>Fireplace (Gas/Wood)</p>
+                            <p>Smart Home Integration</p>
+                            <p>Recessed Lighting</p>
+                            <p>Custom Built-ins</p>
+                        </div>
+                        <div class="li-outdoor">
+                            <p>Swimming Pool</p>
+                            <p>In-Ground Pool</p>
+                            <p>Spacious Backyard</p>
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Covered Patio / Pergola</p>
+                            <p>Fire Pit</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Hot Tub / Spa</p>
+                            <p>Outdoor Lighting</p>
+                            <p>Automatic Sprinkler System</p>
+                            <p>Gated Entrance</p>
+                            <p>Detached Guest House</p>
+                            <p>Tree-Lined Driveway</p>
+                            <p>Balcony / Rooftop Deck</p>
+                            <p>Water Features (Fountain, Pond)</p>
+                            <p>Private Dock / Waterfront Access</p>
+                        </div>
+                        <div class="li-kitchen">
+                            <p>Granite Countertops</p>
+                            <p>Stainless Steel Appliances</p>
+                            <p>Kitchen Island with Seating</p>
+                            <p>Walk-in Pantry</p>
+                            <p>Double Oven</p>
+                            <p>Under-Cabinet Lighting</p>
+                            <p>Soft-Close Cabinets</p>
+                        </div>
+                        <div class="li-bathroom">
+                            <p>Double Vanity</p>
+                            <p>Soaking Tub</p>
+                            <p>Walk-in Shower with Glass Enclosure</p>
+                            <p>Heated Floors</p>
+                            <p>Luxury Spa Bath</p>
+                        </div>
+                        <div class="li-exterior">
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Deck / Patio</p>
+                            <p>In-Ground Pool</p>
+                            <p>Covered Porch</p>
+                        </div>
+                        <div class="li-ss">
+                            <p>Gated Community</p>
+                            <p>24/7 Security Surveillance</p>
+                            <p>Smart Door Locks</p>
+                            <p>Fire & Carbon Monoxide Detectors</p>
+                            <p>Motion Sensor Lighting</p>
+                        </div>
+                        <div class="li-energy">
+                            <p>Solar Panels</p>
+                            <p>Energy Star Appliances</p>
+                            <p>LED Lighting</p>
+                            <p>High-Efficiency HVAC System</p>
+                            <p>Tankless Water Heater</p>
+                        </div>
+                        <div class="li-community">
+                            <p>Clubhouse</p>
+                            <p>Fitness Center</p>
+                            <p>Swimming Pool</p>
+                            <p>Walking Trails</p>
+                            <p>Dog Park</p>
+                            <p>Playground</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="listing" onclick="initProperty(this)">
+                <div class="list-img"><img src="l2.webp" alt=""></div>
+                <div class="list-name">Maison 99 Emirates Hills </div>
+                <p class="location">
+                    <em class="city">Deira</em>
+                </p>
+                <p class="price">2,230,000</p>
+                <p class="list-info">
+                    <em class="bed">3</em> | 
+                    <em class="bath">3</em> | 
+                    <em class="size">2400</em>
+                </p>
+
+
+                <section class="vp-info none">
+                    <div class="imgs">
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img class="dining-pic" src="l2.webp" alt=""> </div>
+                        <div class=""> <img class="kitchen-pic" src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img class="living-pic" src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="bedroom-pic" src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="floor-plan-pic" src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                    </div>
+                    <div class="virtual-vid"><video src="samplevid.mp4"></video></div>
+                    <div class="li-prop-info">
+                        <div class="li-name">Lorem, ipsum dolor.</div>
+                        <div class="li-loc">23 Maplewood Drive, Kensington, London, W8 5EH, United Kingdom</div>
+                        <div class="li-price">124,000</div>
+                        <div class="li-type">Mansion</div>
+                        <div class="li-year">2001</div>
+                        <div class="li-land">1.3 acres</div>
+                        <div class="li-fur">Fully Furnished</div>
+                        <div class="li-parking">Garage</div>
+                        <div class="li-hoa">104/yr</div>
+                        <div class="map-link">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus</div>
+                    </div>
+                    <div class="feats">
+                        <div class="li-interior">
+                            <p>Open Concept Living</p>
+                            <p>Hardwood Flooring</p>
+                            <p>Vaulted Ceilings</p>
+                            <p>Walk-in Closets</p>
+                            <p>Fireplace (Gas/Wood)</p>
+                            <p>Smart Home Integration</p>
+                            <p>Recessed Lighting</p>
+                            <p>Custom Built-ins</p>
+                        </div>
+                        <div class="li-outdoor">
+                            <p>Swimming Pool</p>
+                            <p>In-Ground Pool</p>
+                            <p>Spacious Backyard</p>
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Covered Patio / Pergola</p>
+                            <p>Fire Pit</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Hot Tub / Spa</p>
+                            <p>Outdoor Lighting</p>
+                            <p>Automatic Sprinkler System</p>
+                            <p>Gated Entrance</p>
+                            <p>Detached Guest House</p>
+                            <p>Tree-Lined Driveway</p>
+                            <p>Balcony / Rooftop Deck</p>
+                            <p>Water Features (Fountain, Pond)</p>
+                            <p>Private Dock / Waterfront Access</p>
+                        </div>
+                        <div class="li-kitchen">
+                            <p>Granite Countertops</p>
+                            <p>Stainless Steel Appliances</p>
+                            <p>Kitchen Island with Seating</p>
+                            <p>Walk-in Pantry</p>
+                            <p>Double Oven</p>
+                            <p>Under-Cabinet Lighting</p>
+                            <p>Soft-Close Cabinets</p>
+                        </div>
+                        <div class="li-bathroom">
+                            <p>Double Vanity</p>
+                            <p>Soaking Tub</p>
+                            <p>Walk-in Shower with Glass Enclosure</p>
+                            <p>Heated Floors</p>
+                            <p>Luxury Spa Bath</p>
+                        </div>
+                        <div class="li-exterior">
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Deck / Patio</p>
+                            <p>In-Ground Pool</p>
+                            <p>Covered Porch</p>
+                        </div>
+                        <div class="li-ss">
+                            <p>Gated Community</p>
+                            <p>24/7 Security Surveillance</p>
+                            <p>Smart Door Locks</p>
+                            <p>Fire & Carbon Monoxide Detectors</p>
+                            <p>Motion Sensor Lighting</p>
+                        </div>
+                        <div class="li-energy">
+                            <p>Solar Panels</p>
+                            <p>Energy Star Appliances</p>
+                            <p>LED Lighting</p>
+                            <p>High-Efficiency HVAC System</p>
+                            <p>Tankless Water Heater</p>
+                        </div>
+                        <div class="li-community">
+                            <p>Clubhouse</p>
+                            <p>Fitness Center</p>
+                            <p>Swimming Pool</p>
+                            <p>Walking Trails</p>
+                            <p>Dog Park</p>
+                            <p>Playground</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="listing" onclick="initProperty(this)">
+                <div class="list-img"><img src="l2.webp" alt=""></div>
+                <div class="list-name">Maison 99 Emirates Hills </div>
+                <p class="location">
+                    <em class="city">Deira</em>
+                </p>
+                <p class="price">2,230,000</p>
+                <p class="list-info">
+                    <em class="bed">3</em> | 
+                    <em class="bath">3</em> | 
+                    <em class="size">2400</em>
+                </p>
+
+
+                <section class="vp-info none">
+                    <div class="imgs">
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img class="dining-pic" src="l2.webp" alt=""> </div>
+                        <div class=""> <img class="kitchen-pic" src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img class="living-pic" src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="bedroom-pic" src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img class="floor-plan-pic" src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l2.webp" alt=""> </div>
+                        <div class=""> <img src="l3.webp" alt=""> </div>
+                        <div class=""> <img src="l4.webp" alt=""> </div>
+                        <div class=""> <img src="l5.webp" alt=""> </div>
+                        <div class=""> <img src="l6.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                        <div class=""> <img src="l1.webp" alt=""> </div>
+                        <div class=""> <img src="l7.webp" alt=""> </div>
+                    </div>
+                    <div class="virtual-vid"><video src="samplevid.mp4"></video></div>
+                    <div class="li-prop-info">
+                        <div class="li-name">Lorem, ipsum dolor.</div>
+                        <div class="li-loc">23 Maplewood Drive, Kensington, London, W8 5EH, United Kingdom</div>
+                        <div class="li-price">124,000</div>
+                        <div class="li-type">Mansion</div>
+                        <div class="li-year">2001</div>
+                        <div class="li-land">1.3 acres</div>
+                        <div class="li-fur">Fully Furnished</div>
+                        <div class="li-parking">Garage</div>
+                        <div class="li-hoa">104/yr</div>
+                        <div class="map-link">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1786534495045!2d55.27437639999999!3d25.197197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2sus!4v1741817542595!5m2!1sen!2sus</div>
+                    </div>
+                    <div class="feats">
+                        <div class="li-interior">
+                            <p>Open Concept Living</p>
+                            <p>Hardwood Flooring</p>
+                            <p>Vaulted Ceilings</p>
+                            <p>Walk-in Closets</p>
+                            <p>Fireplace (Gas/Wood)</p>
+                            <p>Smart Home Integration</p>
+                            <p>Recessed Lighting</p>
+                            <p>Custom Built-ins</p>
+                        </div>
+                        <div class="li-outdoor">
+                            <p>Swimming Pool</p>
+                            <p>In-Ground Pool</p>
+                            <p>Spacious Backyard</p>
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Covered Patio / Pergola</p>
+                            <p>Fire Pit</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Hot Tub / Spa</p>
+                            <p>Outdoor Lighting</p>
+                            <p>Automatic Sprinkler System</p>
+                            <p>Gated Entrance</p>
+                            <p>Detached Guest House</p>
+                            <p>Tree-Lined Driveway</p>
+                            <p>Balcony / Rooftop Deck</p>
+                            <p>Water Features (Fountain, Pond)</p>
+                            <p>Private Dock / Waterfront Access</p>
+                        </div>
+                        <div class="li-kitchen">
+                            <p>Granite Countertops</p>
+                            <p>Stainless Steel Appliances</p>
+                            <p>Kitchen Island with Seating</p>
+                            <p>Walk-in Pantry</p>
+                            <p>Double Oven</p>
+                            <p>Under-Cabinet Lighting</p>
+                            <p>Soft-Close Cabinets</p>
+                        </div>
+                        <div class="li-bathroom">
+                            <p>Double Vanity</p>
+                            <p>Soaking Tub</p>
+                            <p>Walk-in Shower with Glass Enclosure</p>
+                            <p>Heated Floors</p>
+                            <p>Luxury Spa Bath</p>
+                        </div>
+                        <div class="li-exterior">
+                            <p>Landscaped Garden</p>
+                            <p>Outdoor Kitchen & BBQ Area</p>
+                            <p>Private Fenced Yard</p>
+                            <p>Deck / Patio</p>
+                            <p>In-Ground Pool</p>
+                            <p>Covered Porch</p>
+                        </div>
+                        <div class="li-ss">
+                            <p>Gated Community</p>
+                            <p>24/7 Security Surveillance</p>
+                            <p>Smart Door Locks</p>
+                            <p>Fire & Carbon Monoxide Detectors</p>
+                            <p>Motion Sensor Lighting</p>
+                        </div>
+                        <div class="li-energy">
+                            <p>Solar Panels</p>
+                            <p>Energy Star Appliances</p>
+                            <p>LED Lighting</p>
+                            <p>High-Efficiency HVAC System</p>
+                            <p>Tankless Water Heater</p>
+                        </div>
+                        <div class="li-community">
+                            <p>Clubhouse</p>
+                            <p>Fitness Center</p>
+                            <p>Swimming Pool</p>
+                            <p>Walking Trails</p>
+                            <p>Dog Park</p>
+                            <p>Playground</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+
+            
+
+            
+        </div>
+
+    </section>
+
+    <footer>
+        <div class="foot-grid">
+            <div class="foot-sec">
+                <div class="foot-ttl">Buyer Resources </div>
+                <div class="foot-links">
+                    <a class="foot-link">Find Your Dream Home</a>
+                    <a class="foot-link">Home Valuation Tool</a>
+                    <a class="foot-link">Expert Buying Tips</a>
+                    <a class="foot-link">Browse Listings</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">Seller Resources </div>
+                <div class="foot-links">
+                    <a class="foot-link">Maximize Your Home’s Value</a>
+                    <a class="foot-link">Selling Made Simple Guide</a>
+                    <a class="foot-link">Mortgage & Market Insights</a>
+                    <a class="foot-link">Our Commitment to You</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">Company</div>
+                <div class="foot-links">
+                    <a class="foot-link">Who We Are?</a>
+                    <a class="foot-link">Get in Touch</a>
+                    <a class="foot-link">Partnerships & Certifications</a>
+                    <a class="foot-link">Success Stories & Testimonials</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">MB Real Estate </div>
+                <div class="foot-links">
+                    <a class="foot-link">📍 79 E. 14th Avenue, City, State, Zip</a>
+                    <a class="foot-link">📞 (561) 555-8954</a>
+                    <a class="foot-link">📠 (561) 555-8172</a>
+                    <a class="foot-link">info@MBRealtors.com</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="foot-logo-con"><img src="logomono.png" alt="" width="100%" height="100%"></div>
+
+        <p class="dis">©2025 MB Real Estate. All rights reserved.</p>
+    </footer>
+
+
+    <script src="def.js"></script>
+    <script>
+        let gsCounter;
+        let gsMain;
+        let gsItem;
+        let gsObj = {};
+        let defarr = [];
+        let imgCounter;
+        let noOfPages
+        let currentListingImgs = ''
+        const sliderImgCounter = document.querySelector('.img-counter')
+        const gCurrent = document.querySelector('.current-no')
+        const gTotal = document.querySelector('.pages')
+        const sliderPrim = document.querySelector('.gallery-slider')
+        const sliderSec = document.querySelector('.slider-button-con')
+        const gridPrim = document.querySelector('.gallery-grid-disp')
+        const gridSec = document.querySelector('.grid-button-con')
+        const properties = document.querySelectorAll('.listing')
+
+        const viewport = document.querySelector('.viewport-sec')
+        const vpName = document.querySelector('.vp-name');
+        const vpLocation = document.querySelector('.vp-location');
+        const vpPrice = document.querySelector('.vp-price');
+        const vpBed = document.querySelector('.vp-bed');
+        const vpBath = document.querySelector('.vp-bath');
+        const vpSize = document.querySelector('.vp-size');
+        const vpIntroImg = document.querySelector('.vp-intro-img img');
+        const vpIntroInfo = document.querySelector('.vp-intro-info');
+        const vpFeat = document.querySelector('.vp-feat');
+        const vpInteriorFeat = document.querySelector('.vp-interior-feat')
+        const vpOutdoorFeat = document.querySelector('.vp-outdoor-feat') 
+        const vpKitchenFeat = document.querySelector('.vp-kitchen-feat') 
+        const vpBathroomFeat = document.querySelector('.vp-bathroom-feat') 
+        const vpExteriorFeat = document.querySelector('.vp-exterior-feat') 
+        const vpSsFeat = document.querySelector('.vp-ss') 
+        const vpEnergyFeat = document.querySelector('.vp-energy') 
+        const vpCommunityFeat = document.querySelector('.vp-community')
+        const vpContactImg = document.querySelector('.vp-contact-img img');
+        const vpContactName = document.querySelector('.vp-contact-txt h1');
+        const vpContactEmail = document.querySelector('.cone');
+        const vpContactPhone = document.querySelector('.conp');
+        const vpContactBtn = document.querySelector('.con-agt-btn');
+        const vpVideoCon = document.querySelector('.video-con video');
+        const vpMap = document.querySelector('.map iframe');
+        const vpFloorPlan = document.querySelector('.floor-plan img');
+        const vpLiving = document.querySelector('.vp-living img')
+        const vpBedroom = document.querySelector('.vp-bedroom img')
+        const vpKitchen = document.querySelector('.vp-kitchen img')
+        const vpDining = document.querySelector('.vp-dining img')
+     
+        const piVpName = document.querySelector('.pi-vp-name');
+        const piVpAddress = document.querySelector('.pi-vp-address');
+        const piVpPrice = document.querySelector('.pi-vp-price');
+        const piVpType = document.querySelector('.pi-vp-type');
+        const piVpYear = document.querySelector('.pi-vp-year');
+        const piVpLandSz = document.querySelector('.pi-vp-landsz');
+        const piVpFurnish = document.querySelector('.pi-vp-furnish');
+        const piVpParking = document.querySelector('.pi-vp-parking');
+        const piVpHOA = document.querySelector('.pi-vp-HOA');
+
+
+
+        
+        properties.forEach(
+            listing => {
+                defarr.push(listing)
+            }
+        )
+
+        defarr.forEach(
+            ele => {
+                defObserver.observe(ele)
+            }
+        )
+
+        let currentPage
+        let currentGsPosition
+
+        
+        function inputGalImgs(cls){
+            gsMain = document.querySelector('.gallery-all')
+            gsMain.innerHTML = ''
+            gsItem = gsMain.querySelectorAll('.gs-item');
+            const prop = cls
+            const propImgs = prop.querySelectorAll('div')
+            
+                        
+            imgCounter = 0 
+
+            propImgs.forEach(
+                div => {
+                    imgCounter++
+                    gsMain.innerHTML += ` <div class=" gs${imgCounter} gs-item"> ${div.innerHTML} </div>` 
+                    gsItem = gsMain.querySelectorAll('.gs-item');
+                }
+                
+            )    
+            
+        }  
+        
+        
+        
+        function sg(w){
+            if(w === 1){
+                sliderDOMsInit()
+            }else{
+                gridDOMsInit()
+            }
+
+        }
+
+
+        function sliderDOMsInit(cls){    
+
+            
+            if(!sliderPrim.classList.contains('gallery-all')){
+                sliderPrim.classList.add('gallery-all')
+            }
+            if(sliderPrim.classList.contains('none') && sliderSec.classList.contains('none')){
+                sliderPrim.classList.remove('none') 
+                sliderSec.classList.remove('none')
+            }
+            if(gridPrim.classList.contains('gallery-all')){
+                gridPrim.classList.remove('gallery-all')
+            }
+            if(!gridPrim.classList.contains('none') && !gridSec.classList.contains('none')){
+                gridPrim.classList.add('none') 
+                gridSec.classList.add('none')
+            }
+            
+            inputGalImgs(cls)
+
+            gsMain = document.querySelector('.gallery-all')
+            currentGsPosition = 1
+            gsCounter = 0;
+
+            gsItem.forEach(item => {
+                gsCounter++;
+                let currNum = gsCounter;
+                gsObj[currNum] = gsMain.querySelector(cgs(gsCounter)); // Store in object
+            });
+            sliderImgCounter.innerText = `(${currentGsPosition}/${gsCounter})`
+            updateSliderStyles(currentGsPosition)
+        
+        }     
+        function left(position){
+            let leftPosition
+            if (position !== 1){
+                leftPosition = position - 1
+            }else{
+                leftPosition = gsCounter
+            }
+            return leftPosition
+        }
+        function right(position){
+            let rightPosition
+            if (position !== gsCounter){
+                rightPosition = position + 1
+            }else{
+                rightPosition = 1
+            }
+            return rightPosition
+        }           
+        function updateSliderStyles(position){
+            
+
+            let imgsInPlay = [
+                gsObj[position],
+                gsObj[left(position)],
+                gsObj[right(position)],
+                gsObj[left(left(position))],
+                gsObj[right(right(position))]
+            ]
+            
+            
+            for(item of imgsInPlay){
+                if(item.classList.contains('current')){
+                    item.classList.remove('current')
+                }else if(item.classList.contains('right')){
+                    item.classList.remove('right')
+                }else if(item.classList.contains('left')){
+                    item.classList.remove('left')
+                }else if(item.classList.contains('left-outer')){
+                    item.classList.remove('left-outer')
+                }else if(item.classList.contains('right-outer')){
+                    item.classList.remove('right-outer')
+                }
+            }
+
+            gsObj[position].classList.add('current')
+            gsObj[left(position)].classList.add('left')
+            gsObj[right(position)].classList.add('right')
+            gsObj[left(left(position))].classList.add('left-outer')
+            gsObj[right(right(position))].classList.add('right-outer')
+        }
+        function moveLeft(){
+            currentGsPosition = left(currentGsPosition)
+            updateSliderStyles(currentGsPosition)
+            sliderImgCounter.innerText = `(${currentGsPosition}/${gsCounter})`
+        }
+        function moveRight(){
+            currentGsPosition = right(currentGsPosition)
+            updateSliderStyles(currentGsPosition)
+            sliderImgCounter.innerText = `(${currentGsPosition}/${gsCounter})`
+        }
+
+
+        function gridDOMsInit(cls){
+
+            if(!gridPrim.classList.contains('gallery-all')){
+                gridPrim.classList.add('gallery-all')
+            }
+            if(gridPrim.classList.contains('none') && gridSec.classList.contains('none')){
+                gridPrim.classList.remove('none') 
+                gridSec.classList.remove('none')
+            }
+            if(sliderPrim.classList.contains('gallery-all')){
+                sliderPrim.classList.remove('gallery-all')
+            }
+            if(!sliderPrim.classList.contains('none') && !sliderSec.classList.contains('none')){
+                sliderPrim.classList.add('none') 
+                sliderSec.classList.add('none')
+            }
+            
+            inputGalImgs(cls)
+
+            let dif = 6
+            noOfPages = Math.ceil(imgCounter/dif)
+            let newHtml = ''
+            let imgNo = 0
+    
+
+            for (let i = 1; i <= noOfPages; i++){
+                let pgCon = ''
+                if(i === noOfPages){
+                    while(imgNo < imgCounter){ 
+                        imgNo++
+                        pgCon += `<div class="gs-item gs${imgNo}">${gsMain.querySelector(cgs(imgNo)).innerHTML}</div>` 
+                    }
+                }else{
+                    while(imgNo < i*dif){
+                        imgNo++
+                        pgCon += `<div class="gs-item gs${imgNo}">${gsMain.querySelector(cgs(imgNo)).innerHTML}</div>`
+                    }
+                }
+                newHtml += `<div class="g-page gpg${i} none">${pgCon}</div>`                
+            }
+            gsMain.innerHTML = newHtml
+            currentPage = 1
+            setPage(currentPage)
+            updateGridPosition()
+        }
+
+        function changePageNext(){
+            if(currentPage === noOfPages)return;
+
+            currentPage++
+            setPage(currentPage)
+            updateGridPosition()
+            window.location.href = '#grid-view'
+        }
+        function changePagePrev(){
+            if(currentPage === 1)return;
+
+            currentPage -= 1
+            setPage(currentPage)
+            updateGridPosition()
+            window.location.href = '#grid-view'
+        }
+
+        function updateGridPosition(){
+            gTotal.innerText = noOfPages
+            gCurrent.innerText = currentPage
+            sliderImgCounter.innerText = `(${imgCounter})`
+        }
+        function setPage(position){
+            let bx = gsMain.querySelectorAll('.g-page')
+            bx.forEach(ba => {
+                if(!ba.classList.contains('none')){
+                    ba.classList.add('none')
+                }
+             }    
+            )
+        
+            gsMain.querySelector(`.gpg${position}`).classList.toggle('none')
+            updateGridPosition()
+
+        }
+
+
+
+        function gs(num){
+            let gs = `gs${num}`
+            return gs 
+        }
+        function cgs(num){
+            let gs = `.gs${num}`
+            return gs 
+        }
+
+        function deComma(value) {
+            let cleanedValue = value.replace(/,/g, '');
+            return cleanedValue;
+        }
+
+        function addComma(value) {
+            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function initProperty(list){
+            const prop = list
+            const propImgs = prop.querySelector('.list-img img')
+            const propInfo = prop.querySelector('.list-info')
+            const propPrice = prop.querySelector('.price')
+            const propLocation = prop.querySelector('.location')
+            const propTitle = prop.querySelector('.list-name')
+            const propVP = prop.querySelector('.vp-info')
+            const propVPImgs = propVP.querySelector('.imgs')
+            const ggKit = propVPImgs.querySelector('.kitchen-pic').src
+            const ggLiv = propVPImgs.querySelector('.living-pic').src  
+            const ggDin = propVPImgs.querySelector('.dining-pic').src
+            const ggBed = propVPImgs.querySelector('.bedroom-pic').src
+            const ggFlr = propVPImgs.querySelector('.floor-plan-pic').src 
+            const propVPVideo = propVP.querySelector('.virtual-vid video').src
+            const propVPMap = propVP.querySelector('.map iframe')
+            const propVPFloorPlan = propVP.querySelector('.floor-plan')
+            const propVPName = propVP.querySelector('.li-name')
+            const mapLink = propVP.querySelector('.map-link').innerHTML
+            const propVPAddress = propVP.querySelector('.li-loc')
+            const propVPPrice = propVP.querySelector('.li-price')
+            const propVPType = propVP.querySelector('.li-type')
+            const propVPYear = propVP.querySelector('.li-year')
+            const propVPLandSz = propVP.querySelector('.li-land')
+            const propVPFurnish = propVP.querySelector('.li-fur')
+            const propVPParking = propVP.querySelector('.li-parking')
+            const propVPHOA = propVP.querySelector('.li-hoa')
+            const propVPInterior = propVP.querySelector('.li-interior')
+            const propVPOutdoor = propVP.querySelector('.li-outdoor')
+            const propVPKitchen = propVP.querySelector('.li-kitchen')
+            const propVPBathroom = propVP.querySelector('.li-bathroom')
+            const propVPExterior = propVP.querySelector('.li-exterior')
+            const propVPSS = propVP.querySelector('.li-ss')
+            const propVPEnergy = propVP.querySelector('.li-energy')
+            const propVPCommunity = propVP.querySelector('.li-community')
+            const propVPFeatures = propVP.querySelectorAll('.vp-features')
+
+        
+            // Transfer info to the viewport
+            vpName.innerHTML = propTitle.innerHTML;
+            vpLocation.querySelector('em').innerHTML = propLocation.querySelector('.city').innerHTML;
+            vpPrice.innerHTML = propPrice.innerHTML;
+            vpBed.innerHTML = propInfo.querySelector('.bed').innerHTML;
+            vpBath.innerHTML = propInfo.querySelector('.bath').innerHTML;
+            vpSize.innerHTML = propInfo.querySelector('.size').innerHTML;
+            vpIntroImg.src = propImgs.src;
+            vpMap.src = mapLink;
+
+            piVpName.innerHTML = propVPName.innerHTML;
+            piVpAddress.innerHTML = propVPAddress.innerHTML;
+            piVpPrice.innerHTML = propVPPrice.innerHTML;
+            piVpType.innerHTML = propVPType.innerHTML;
+            piVpYear.innerHTML = propVPYear.innerHTML;
+            piVpLandSz.innerHTML = propVPLandSz.innerHTML;
+            piVpFurnish.innerHTML = propVPFurnish.innerHTML;
+            piVpParking.innerHTML = propVPParking.innerHTML;
+            piVpHOA.innerHTML = propVPHOA.innerHTML;
+            vpFloorPlan.src = ggFlr
+            vpLiving.src = ggLiv
+            vpBedroom.src = ggBed
+            vpKitchen.src = ggKit
+            vpDining.src = ggDin
+            vpVideoCon.src = propVPVideo
+
+
+            // Transfer features
+            vpInteriorFeat.innerHTML = '<legend>Interior Features</legend>' + propVPInterior.innerHTML;
+            vpOutdoorFeat.innerHTML = '<legend>Outdoor Features</legend>' + propVPOutdoor.innerHTML;
+            vpKitchenFeat.innerHTML = '<legend>Kitchen Features</legend>' + propVPKitchen.innerHTML;
+            vpBathroomFeat.innerHTML = '<legend>Bathroom Features</legend>' + propVPBathroom.innerHTML;
+            vpExteriorFeat.innerHTML = '<legend>Exterior Features</legend>' + propVPExterior.innerHTML;
+            vpSsFeat.innerHTML = '<legend>Safety & Security</legend>' + propVPSS.innerHTML;
+            vpEnergyFeat.innerHTML = '<legend>Energy and Efficiency</legend>' + propVPEnergy.innerHTML;
+            vpCommunityFeat.innerHTML = '<legend>Community Amenities</legend>' + propVPCommunity.innerHTML;
+
+            
+            currentListingImgs = propVPImgs
+            sliderDOMsInit(currentListingImgs)
+
+
+            toggleVP()
+        }
+        
+        function toggleVP(){
+            viewport.classList.toggle('none')
+        }
+        
+        // l1 = document.querySelector('.listing')
+        // initProperty(l1)
+    </script>
+</body>
+</html>

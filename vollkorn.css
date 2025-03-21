@@ -1,0 +1,59 @@
+@font-face {
+    font-family: 'Vollkorn-Black';
+    src: url('Vollkorn/Vollkorn-Black.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Vollkorn-BlackItalic';
+    src: url('Vollkorn/Vollkorn-BlackItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Vollkorn-Bold';
+    src: url('Vollkorn/Vollkorn-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Vollkorn-BoldItalic';
+    src: url('Vollkorn/Vollkorn-BoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Vollkorn-ExtraBold';
+    src: url('Vollkorn/Vollkorn-ExtraBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Vollkorn-ExtraBoldItalic';
+    src: url('Vollkorn/Vollkorn-ExtraBoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Vollkorn-Italic';
+    src: url('Vollkorn/Vollkorn-Italic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Vollkorn-Medium';
+    src: url('Vollkorn/Vollkorn-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Vollkorn-MediumItalic';
+    src: url('Vollkorn/Vollkorn-MediumItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Vollkorn-Regular';
+    src: url('Vollkorn/Vollkorn-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Vollkorn-SemiBold';
+    src: url('Vollkorn/Vollkorn-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Vollkorn-SemiBoldItalic';
+    src: url('Vollkorn/Vollkorn-SemiBoldItalic.ttf') format('truetype');
+}

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews</title>
+    <link rel="stylesheet" href="def.css">
+    <link rel="stylesheet" href="Poppins.css">
+    <link rel="stylesheet" href="rubik.css">
+    <link rel="stylesheet" href="montserrat.css">
+    <link rel="stylesheet" href="vollkorn.css">
+    <link rel="stylesheet" href="oswald.css">
+
+    <style>
+        .review-sec{
+            background-image: url(revintroback.webp);
+            min-height: 500px;
+            height: fit-content;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4em 0 ;
+        }
+        .review-sec > *{
+            position: relative;
+            z-index: 1;
+        }
+        .rev-ttl{
+            text-align: center;
+            font-family: vollkorn-extrabold;
+            font-size: 50pt;
+            width: 95%;
+            transition: 1.5s;
+        }
+        .rev-sub{
+            font-size: 22pt;
+            color: var(--champagne-gold);
+            transition:transform 1.8s, opacity 1.5s;
+        }
+        .review-sec::after{
+            content: '';
+            position:absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #3f2f05c1;
+            z-index: 0;
+        }
+        .rev-btn{
+            padding: .8em 1.3em;
+            background-color: rgba(255, 255, 255, 0);
+            backdrop-filter: blur(10px);
+            color: black;
+            font-family: poppins-regular;
+            border-radius: 2px;
+            font-size: 13pt;
+            border: 2px solid white;
+            color: white;
+            transition: .4s;
+        }
+        .rev-btn:hover{
+            background-color: rgba(255, 255, 255, 0.436);
+            scale: 1.02;
+        }
+
+        .rev-sec{
+            margin-top: 20px;
+            width: 100%;
+            padding: 20px;
+            place-items: center ;
+            height: fit-content;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);   
+            grid-auto-rows: auto;
+            grid-gap: 1em;
+            overflow-y: hidden;
+        }
+        .rev:nth-child(2n){
+            background-image: url(r1.webp);
+        }
+        .rev:nth-child(3n){
+            background-image: url(r2.webp);
+        }
+        .rev:nth-child(4n){
+            background-image: url(r3.webp);
+        }
+        .rev{
+            padding: 30px;
+            width: 100%;
+            min-height: 100%;
+            height: fit-content;
+            margin: 15px 0 30px 0 ;
+            background-image: url(r1.webp);
+            background-size: cover;
+            background-position: center;
+            backdrop-filter: blur(10px);
+            color: white;
+            position: relative;
+            border-radius: 9px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+        }
+        .rev-in{
+            opacity: 1;
+            transform: translateY(0px);
+        }
+        .rev:nth-child(1){
+            grid-column: 1/3;
+        }
+        .rev:nth-child(3){
+            grid-column: 1/4;
+        }
+        .rev:nth-child(7){
+            grid-column: 1/3;
+        } 
+        .rev > *{
+            z-index: 2;
+        }
+        .rev::after{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(27, 27, 27, 0.877);
+            border-radius: 9px;
+            z-index: -1;
+        }
+        .rev-name{
+            margin-top: 40px;
+            padding-left: 40px;
+        }
+        .intro{
+            width: 100%;
+            min-height: 450px;
+            height: 100%;
+            background-image: url(revintroback.jpg);
+            background-position: center;
+            background-size: cover;
+            margin-top: var(--header-height);
+            color: white;
+            position: relative;
+            z-index: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2em;
+            opacity: 0;
+            transform: translateY(70px);
+            animation: slide-up 1s ease-out 1s forwards;
+            padding-bottom: 50px;
+        }  
+        .intro > *{
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(70px);
+            animation: slide-up 1s ease-out 1.5s forwards;
+        }
+        .intro::after{
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.763);
+            backdrop-filter: blur(0px);
+            z-index: -1;
+        }  
+        .rev-btn{
+            padding: .8em 1.5em;
+            font-size: 13pt;
+        }
+        .intro h1{
+            font-family: vollkorn-bold;
+            font-size: 40pt;
+            text-align: center;
+        }
+        .intro h2{
+            font-size: 15pt;
+            text-align: center;
+        }
+        .new-rev-con{
+            width:100%;
+            height:fit-content;
+            color: white;
+            padding: 3em 1em 5em 1em ;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-repeat: no-repeat;
+            background-color: black;
+            margin-top:50px;
+            padding:var(--header-height);
+        }
+        form h1{
+            text-align: left;
+            margin-bottom: 20px;
+            margin-top: 25px;
+        }
+        form{
+            width: 50%;
+        }
+        form > div{
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            margin: 5px 0 10px 0 ;
+        }
+        form > div > input,
+        .phone-con > div > input,
+        select{
+            width: 100%;
+            height: 30px;
+            border-radius: 6px;
+            outline: 0px;
+            background-color: rgba(255, 255, 255, 0.493);
+            backdrop-filter: blur(5px);
+            border: none;
+            padding: 5px;
+        }
+        textarea{
+            width: 100%;
+            height: 150px;
+            border-radius: 6px;
+            outline: 0px;
+            background-color: rgba(255, 255, 255, 0.493);
+            backdrop-filter: blur(5px);
+            border: none; 
+            resize: none;
+            overflow-y: scroll;
+            padding: 5px;
+        }
+        textarea::-webkit-scrollbar{
+            width: 10px;
+            background-color: var(--rose-quartz-border);
+        }
+        textarea::-webkit-scrollbar-thumb{
+            border-radius: 4px;
+            background-color: white;
+        }
+        textarea::-webkit-scrollbar-track{
+            border-radius: 10px;
+        }
+       
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        button{
+            border-radius: 6px;
+            outline: 0px;
+            background-color: rgba(255, 255, 255, 0.493);
+            backdrop-filter: blur(5px);
+            border: none;
+            font-size: 13pt;
+            padding: .8em 2.4em;
+        }
+
+        @keyframes ret{
+            to{
+                opacity: 1;
+                scale: 1;
+                transform: translate(0);
+            }
+        }
+        .ret-anim{
+            animation-name: ret;
+        }
+        .ret-def{
+            opacity: 1;
+            scale: 1;
+            transform: translate(0);
+        }
+        @media screen and (max-width:890px){
+            .rev-sec{
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .rev:nth-child(1){
+                grid-column: 1/2;
+            }
+            .rev:nth-child(3){
+                grid-column: 1/2;
+                grid-row: 2/4;
+            }
+            .rev:nth-child(7){
+                grid-column: 2/3;
+                
+            }    
+        }
+        @media screen and (max-width:675px){
+            .rev:nth-child(3){
+                grid-column: 1/3;
+            }
+        }
+        @media screen and (max-width:530px){
+            .rev{
+                font-size: 10pt;
+            }
+            .rev p,
+            .rev-name{
+                font-family: poppins-regular;
+            }
+            .new-rev-con{
+                padding: 1.5em;
+                padding-top: var(--header-height);
+            }
+            form h1{
+                font-size: 20pt;
+            }
+
+        }
+        @media screen and (max-width:425px){ 
+            .rev-sec{
+                grid-template-columns: 1fr;
+            }
+            .rev,
+            .rev:nth-child(1){
+                grid-column: 1/3;
+                font-size: 8pt;
+            }
+        }
+        @media screen and (max-width:375px){
+            .intro h1{
+                font-size: 30pt;
+            }
+            .intro h2{
+                font-size: 10pt;
+            }
+        }
+
+        @media screen and (max-width:900px){
+            form{
+                width: 100%;
+                margin-bottom: 60px;
+            }
+        }
+        @media screen and (max-width:765px){
+            #cc{
+                font-size: 8pt;
+            }
+        }
+        @media screen and (max-width:480px){
+            .cc{
+                font-size: 9pt;
+            }
+        }
+        
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-con">
+            <div class="logo-img">
+                <img src="logomono.png" width="100%" height="100%">
+            </div>
+            <h1 class="logo-name">MB REALTORS</h1>
+        </div>
+
+        <div class="mob-menu-toggle" onclick="toggleMenu(menuStatus)">
+            <img src="menutoggle.png" width="100%" height="100%"> 
+        </div>
+
+        <div class="menu-con">
+            <a href="index.html" class="menu-item m1">HOME</a>
+            <a href="listings.html" class="menu-item m2">LISTINGS</a>
+            <a href="about.html" class="menu-item m3">ABOUT</a>
+            <a href="contact.html" class="menu-item m4">CONTACT</a>
+            <a href="contact.html" class="sas menu-items">SCHEDULE A SHOWING</a>
+        </div>
+    </header>
+
+    <div class="mob-menu-con">
+        <div class="mob-menu">
+            <div class="mob-menu-close" >
+                <div class="close-img" onclick="toggleMenu(menuStatus)"><img src="menuclose.png" width="100%" height="100%"></div>
+            </div>
+            <a href="index.html"><div class="">Home</div></a>
+            <a href="listings.html" ><div class="">Listings</div></a>
+            <a href="review.html" ><div class="">Reviews</div></a>
+            <a href="contact.html" ><div class="">Contact</div></a>
+            <a href="contact.html" ><div class="">Schedule a Showing</div></a>
+        </div>
+    </div>
+
+    <section class="review-sec">
+        <h1 class="rev-ttl">
+             REAL STORIES, REAL SATISFACTION.<br>
+            <em class="rev-sub">SEE WHY OUR CLIENTS TRUST US.</em>
+        </h1>
+        <button class="rev-btn">
+            Leave A Review
+        </button>
+    </section>
+
+    <section class="rev-sec">
+        <div class="rev">
+            <p>MB Real Estate made the home-buying process smooth and stress-free! Their team was incredibly knowledgeable and guided me through every step. They listened to my needs and found the perfect property for me. Highly recommend them for their professionalism and dedication!</p>
+            <p class="rev-name">- Emily R.</p>
+        </div>
+        <div class="rev">
+            <p>The team at MB Real Estate went above and beyond to help me sell my home quickly and at a great price. Their marketing strategy was spot on, and they kept me updated throughout the entire process. I couldn't have asked for a better experience!</p>
+            <p class="rev-name">- Sophie T.</p>
+        </div>
+        <div class="rev">
+            <p>Working with MB Real Estate was an absolute game-changer in my home-buying journey. From the very first consultation, their team took the time to understand exactly what I was looking for and made the entire process feel effortless. They provided me with a variety of options that matched my needs, answered all my questions with patience, and gave me expert advice that made me feel confident in my decision. Their attention to detail and commitment to customer satisfaction were evident in every interaction. The negotiation process was smooth, and they secured an amazing deal for me. Even after the purchase, they continued to check in and offer support. If you're looking for a real estate company that genuinely cares about their clients and goes the extra mile, I can't recommend MB Real Estate enough. They truly made my dream home a reality!</p>
+            <p class="rev-name">- Mia L.</p>
+        </div>
+        <div class="rev">
+            <p>From start to finish, MB Real Estate exceeded my expectations! They were responsive, professional, and truly had my best interests at heart. Finding my dream home was effortless with their help. I highly recommend them to anyone looking for a reliable real estate team!</p>
+            <p class="rev-name">- Olivia K.</p>
+        </div>
+        <div class="rev">
+            <p>MB Real Estate made the process of finding a rental property seamless. They listened to my needs, showed me great options, and handled all the paperwork efficiently. Their team is friendly, professional, and always willing to go the extra mile. 10/10 service!</p>
+            <p class="rev-name">- Lily M.</p>
+        </div>
+        <div class="rev">
+            <p>If you're looking for a trustworthy and experienced real estate team, MB Real Estate is the way to go! They helped me relocate to a new city, and their knowledge of the local market made the transition so much easier. I can't thank them enough for their help!</p>
+            <p class="rev-name">- Charlotte H.</p>
+        </div>
+        <div class="rev">
+            <p>The customer service at MB Real Estate is outstanding! They truly take the time to understand your needs and work tirelessly to find the perfect property. Whether buying or selling, you can trust them to deliver results. I wouldn't go anywhere else!</p>
+            <p class="rev-name">- Grace P.</p>
+        </div>
+    </section>
+
+    <div class="new-rev-con" id="reviews">
+        <form class="customer-form">
+            <h1>Leave a Review 😁</h1>
+            <div class="con-div f1">
+                <label for="fname">Name</label>
+                <input type="text" maxlength="50">
+            </div>
+            <div class="con-div f3">
+                <label for="email">Email</label>
+                <input type="email" maxlength="500">
+            </div>
+            <div class="con-div f4">
+                <label for="complaint">Your Review</label>
+                <textarea type="text" maxlength="1000"></textarea>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <footer>
+        <div class="foot-grid">
+            <div class="foot-sec">
+                <div class="foot-ttl">Buyer Resources </div>
+                <div class="foot-links">
+                    <a class="foot-link">Find Your Dream Home</a>
+                    <a class="foot-link">Home Valuation Tool</a>
+                    <a class="foot-link">Expert Buying Tips</a>
+                    <a class="foot-link">Browse Listings</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">Seller Resources </div>
+                <div class="foot-links">
+                    <a class="foot-link">Maximize Your Home’s Value</a>
+                    <a class="foot-link">Selling Made Simple Guide</a>
+                    <a class="foot-link">Mortgage & Market Insights</a>
+                    <a class="foot-link">Our Commitment to You</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">Company</div>
+                <div class="foot-links">
+                    <a class="foot-link">Who We Are?</a>
+                    <a class="foot-link">Get in Touch</a>
+                    <a class="foot-link">Partnerships & Certifications</a>
+                    <a class="foot-link">Success Stories & Testimonials</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">MB Real Estate </div>
+                <div class="foot-links">
+                    <a class="foot-link">📍 79 E. 14th Avenue, City, State, Zip</a>
+                    <a class="foot-link">📞 (561) 555-8954</a>
+                    <a class="foot-link">📠 (561) 555-8172</a>
+                    <a class="foot-link">info@MBRealtors.com</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="foot-logo-con"><img src="logomono.png" alt="" width="100%" height="100%"></div>
+
+        <p class="dis">©2025 MB Real Estate. All rights reserved.</p>
+    </footer>
+
+
+
+
+    <script src="def.js"></script>
+    <script>
+        let defarr = []
+        const introTtl = document.querySelector('.rev-ttl')
+        const introSub = document.querySelector('.rev-sub')
+        const introBtn = document.querySelector('.rev-btn')
+        const revs = document.querySelectorAll('.rev')
+
+
+        defarr = [introTtl]
+
+
+        revs.forEach( (item) => {
+            defarr.push(item)
+        })
+        console.log
+        
+        defarr.forEach((item) => {
+            defObserver.observe(item)
+        })
+    </script>
+</body>
+</html>

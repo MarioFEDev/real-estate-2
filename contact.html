@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="def.css">
+    <link rel="stylesheet" href="Poppins.css">
+    <link rel="stylesheet" href="rubik.css">
+    <link rel="stylesheet" href="montserrat.css">
+    <link rel="stylesheet" href="vollkorn.css">
+    <link rel="stylesheet" href="oswald.css">
+
+    <style>
+        body{
+            padding-top: var(--header-height);
+            height: 100%;
+        }
+        .contact-con{
+            color: white;
+            width: 100%;
+            height: 100%;
+            min-height: fit-content;
+            padding: 3em 1em 5em 1em ;
+            background-image: url(conback.jpg);
+            background-size:cover ;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-repeat: no-repeat;
+        }
+        .contact-con > *{
+            z-index: 2;
+        }
+        .contact-con::after{
+            content:'';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.767);
+            z-index: 0;
+            top: 0;
+            left: 0;
+        }
+        .contact{
+            width: 80%;
+            display:flex;
+            
+        }
+        .contact > div{
+            width: 50%;
+        }
+        .contact-info{
+            display: flex;
+            flex-direction: column;
+        }
+        .info-con{
+            width: 100%;
+            height: 50px;
+            background-color:transparent;
+            display: flex; 
+            justify-content: left;
+            align-items: center;
+        }
+        .icon{
+            height: 70%;
+            aspect-ratio: 1/1;
+            background-color: transparent;
+            margin-right: 10px;
+        }
+        .socials{
+            margin-top: 20px
+        }
+        .social-con{
+            display: flex;
+            height: 35px;
+            gap: 10px;
+            position: relative;
+        }
+        .social-con > a > div{
+            height: 100%;
+            aspect-ratio: 1/1;
+        }
+        .social-a{
+            transition: left 3s ease-in-out;
+            padding: 5px;
+            background-color: black;
+            border-radius: 4px;
+        }
+        .s1{
+            transform: translateX(0); transition:opacity .3s linear, transform .0s linear ; z-index: 5;}
+        .s2{
+            transform: translateX(-45px); transition:opacity .3s linear, transform .3s linear ; z-index: 4;}
+        .s3{
+            transform: translateX(-90px); transition:opacity .3s linear, transform .6s linear ; z-index: 3;}
+        .s4{
+            transform: translateX(-135px); transition:opacity .3s linear, transform .9s linear ; z-index: 2;}
+        .s5{
+            transform: translateX(-180px); transition:opacity .3s linear, transform 1.2s linear ; z-index: 1;}
+        
+        .sdef{
+            transform: translateX(0);
+            opacity: 1;
+        }
+        form{
+            width: 50%;
+        }
+        form > div{
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            margin: 5px 0 10px 0 ;
+        }
+        .f1{
+            transform: translateY(0px);
+        }
+        .country-code{
+            transform: translateX(0px);
+        }
+        .pnumber{
+            transform: translateX(0px);
+        }
+        .f3{
+            transform: translateX(0px);
+        }
+        .f4{
+            transform:translateY(0px);
+        }
+        .phone-con{
+            display: grid;
+            grid-template-columns: 40% 60%;
+            grid-gap :0.5em;
+        }
+        form > div > input,
+        .phone-con > div > input,
+        select{
+            width: 100%;
+            height: 30px;
+            border-radius: 6px;
+            outline: 0px;
+            background-color: rgba(255, 255, 255, 0.493);
+            backdrop-filter: blur(5px);
+            border: none;
+            padding: 5px;
+        }
+        option{
+            color: black;
+        }
+        option:hover{
+            background-color: gold;
+        }
+        textarea{
+            width: 100%;
+            height: 150px;
+            border-radius: 6px;
+            outline: 0px;
+            background-color: rgba(255, 255, 255, 0.493);
+            backdrop-filter: blur(5px);
+            border: none; 
+            resize: none;
+            overflow-y: scroll;
+            padding: 5px;
+        }
+        textarea::-webkit-scrollbar{
+            width: 10px;
+            background-color: var(--rose-quartz-border);
+        }
+        textarea::-webkit-scrollbar-thumb{
+            border-radius: 4px;
+            background-color: white;
+        }
+        textarea::-webkit-scrollbar-track{
+            border-radius: 10px;
+        }
+        h1{
+            text-align: left;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        button{
+            border-radius: 6px;
+            outline: 0px;
+            background-color: rgba(255, 255, 255, 0.493);
+            backdrop-filter: blur(5px);
+            border: none;
+            font-size: 13pt;
+            padding: .8em 2.4em;
+        }
+        .con-div{
+            opacity: 0;
+            transition: opacity 1.2s linear, transform 1s linear;
+        }
+        .cdef{
+            transform: translate(0);
+            opacity: 1;
+        }
+
+
+
+        footer{
+            margin-top: 0;
+        }
+        
+
+        @media screen and (max-width:900px){
+            .contact{
+                flex-direction: column-reverse;
+            }
+            .contact > div{
+                width: 100%;
+            }
+            form{
+                width: 100%;
+                margin-bottom: 60px;
+            }
+        }
+        @media screen and (max-width:765px){
+            header{
+                height: 100px;
+            }
+            #cc{
+                font-size: 8pt;
+            }
+        }
+        @media screen and (max-width:480px){
+            .contact{
+                width: 95%;
+            }
+            .cc{
+                font-size: 9pt;
+            }
+        }
+        .none{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-con">
+            <div class="logo-img">
+                <img src="logomono.png" width="100%" height="100%">
+            </div>
+            <h1 class="logo-name">MB REALTORS</h1>
+        </div>
+
+        <div class="mob-menu-toggle" onclick="toggleMenu(menuStatus)">
+            <img src="menutoggle.png" width="100%" height="100%"> 
+        </div>
+
+        <div class="menu-con">
+            <a href="index.html" class="menu-item m1">HOME</a>
+            <a href="listings.html" class="menu-item m2">LISTINGS</a>
+            <a href="review.html" class="menu-item m3">REVIEWS</a>
+            <a href="about.html" class="menu-item m4">ABOUT</a>
+            <a href="contact.html" class="sas menu-items">SCHEDULE A SHOWING</a>
+        </div>
+    </header>
+
+    <div class="mob-menu-con">
+        <div class="mob-menu">
+            <div class="mob-menu-close" >
+                <div class="close-img" onclick="toggleMenu(menuStatus)"><img src="menuclose.png" width="100%" height="100%"></div>
+            </div>
+            <a href="index.html"><div class="">Home</div></a>
+            <a href="listings.html" ><div class="">Listings</div></a>
+            <a href="review.html" ><div class="">Reviews</div></a>
+            <a href="contact.html" ><div class="">Contact</div></a>
+            <a href="contact.html" ><div class="">Schedule a Showing</div></a>
+        </div>
+    </div>
+
+    <div class="contact-con">
+        <div class="contact">
+            <div class="contact-info">
+                <h1>Contact Info</h1>
+
+                <div class="info-con">
+                    <div class="icon"><img src="phone.png" alt="icon" width="100%" height="100%"></div>
+                    <p class="info">(561) 555-8954</p>
+                </div>
+                <div class="info-con">
+                    <div class="icon"><img src="mail.png" alt="icon" width="100%" height="100%"></div>
+                    <p class="info">info@MBRealtors.com</p>
+                </div>
+                <div class="info-con">
+                    <div class="icon"><img src="facebook.png" alt="icon" width="100%" height="100%"></div>
+                    <p class="info">MB_Realtors</p>
+                </div>
+                <div class="info-con">
+                    <div class="icon"><img src="insta.png" alt="icon" width="100%" height="100%"></div>
+                    <p class="info">MB_RealEstate_</p>
+                </div>
+
+                <div class="socials">
+                    <h2 style="margin-bottom: 10px;">Socials</h2>
+                    <div class="social-con">
+                        <a class="social-a s1"><div><img src="facebook.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s2"><div><img src="insta.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s3"><div><img src="x.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s4"><div><img src="linked.png" width="100%" height="100%"></div></a>
+                        <a class="social-a s5"><div><img src="tik.png" width="100%" height="100%"></div></a>
+                    </div>
+                </div>
+            </div>
+            <form class="customer-form">
+                <h1>Customer Form</h1>
+                <div class="con-div f1">
+                    <label for="fname">Name</label>
+                    <input type="text" maxlength="50">
+                </div>
+                <div class="phone-con con-div">
+                    <div class="country-code con-div">
+                        <label for="cc" class="cc">Country Code</label>
+                        <select name="cc" id="cc">
+                            <option value="+1" data-title="United States" class="none">United States (+1)</option>
+                            <option value="+93" data-title="Afghanistan">Afghanistan (+93)</option>
+                            <option value="+355" data-title="Albania">Albania (+355)</option>
+                            <option value="+213" data-title="Algeria">Algeria (+213)</option>
+                            <option value="+1-684" data-title="American Samoa">American Samoa (+1-684)</option>
+                            <option value="+376" data-title="Andorra">Andorra (+376)</option>
+                            <option value="+244" data-title="Angola">Angola (+244)</option>
+                            <option value="+1-264" data-title="Anguilla">Anguilla (+1-264)</option>
+                            <option value="+672" data-title="Antarctica">Antarctica (+672)</option>
+                            <option value="+1-268" data-title="Antigua and Barbuda">Antigua and Barbuda (+1-268)</option>
+                            <option value="+54" data-title="Argentina">Argentina (+54)</option>
+                            <option value="+374" data-title="Armenia">Armenia (+374)</option>
+                            <option value="+297" data-title="Aruba">Aruba (+297)</option>
+                            <option value="+61" data-title="Australia">Australia (+61)</option>
+                            <option value="+43" data-title="Austria">Austria (+43)</option>
+                            <option value="+994" data-title="Azerbaijan">Azerbaijan (+994)</option>
+                            <option value="+1-242" data-title="Bahamas">Bahamas (+1-242)</option>
+                            <option value="+973" data-title="Bahrain">Bahrain (+973)</option>
+                            <option value="+880" data-title="Bangladesh">Bangladesh (+880)</option>
+                            <option value="+1-246" data-title="Barbados">Barbados (+1-246)</option>
+                            <option value="+375" data-title="Belarus">Belarus (+375)</option>
+                            <option value="+32" data-title="Belgium">Belgium (+32)</option>
+                            <option value="+501" data-title="Belize">Belize (+501)</option>
+                            <option value="+229" data-title="Benin">Benin (+229)</option>
+                            <option value="+1-441" data-title="Bermuda">Bermuda (+1-441)</option>
+                            <option value="+975" data-title="Bhutan">Bhutan (+975)</option>
+                            <option value="+591" data-title="Bolivia">Bolivia (+591)</option>
+                            <option value="+387" data-title="Bosnia and Herzegovina">Bosnia and Herzegovina (+387)</option>
+                            <option value="+267" data-title="Botswana">Botswana (+267)</option>
+                            <option value="+55" data-title="Brazil">Brazil (+55)</option>
+                            <option value="+673" data-title="Brunei">Brunei (+673)</option>
+                            <option value="+359" data-title="Bulgaria">Bulgaria (+359)</option>
+                            <option value="+226" data-title="Burkina Faso">Burkina Faso (+226)</option>
+                            <option value="+257" data-title="Burundi">Burundi (+257)</option>
+                            <option value="+855" data-title="Cambodia">Cambodia (+855)</option>
+                            <option value="+237" data-title="Cameroon">Cameroon (+237)</option>
+                            <option value="+1" data-title="Canada">Canada (+1)</option>
+                            <option value="+238" data-title="Cape Verde">Cape Verde (+238)</option>
+                            <option value="+1-345" data-title="Cayman Islands">Cayman Islands (+1-345)</option>
+                            <option value="+236" data-title="Central African Republic">Central African Republic (+236)</option>
+                            <option value="+235" data-title="Chad">Chad (+235)</option>
+                            <option value="+56" data-title="Chile">Chile (+56)</option>
+                            <option value="+86" data-title="China">China (+86)</option>
+                            <option value="+57" data-title="Colombia">Colombia (+57)</option>
+                            <option value="+269" data-title="Comoros">Comoros (+269)</option>
+                            <option value="+506" data-title="Costa Rica">Costa Rica (+506)</option>
+                            <option value="+385" data-title="Croatia">Croatia (+385)</option>
+                            <option value="+53" data-title="Cuba">Cuba (+53)</option>
+                            <option value="+357" data-title="Cyprus">Cyprus (+357)</option>
+                            <option value="+420" data-title="Czech Republic">Czech Republic (+420)</option>
+                            <option value="+45" data-title="Denmark">Denmark (+45)</option>
+                            <option value="+253" data-title="Djibouti">Djibouti (+253)</option>
+                            <option value="+1-767" data-title="Dominica">Dominica (+1-767)</option>
+                            <option value="+1-809" data-title="Dominican Republic">Dominican Republic (+1-809)</option>
+                            <option value="+593" data-title="Ecuador">Ecuador (+593)</option>
+                            <option value="+20" data-title="Egypt">Egypt (+20)</option>
+                            <option value="+503" data-title="El Salvador">El Salvador (+503)</option>
+                            <option value="+240" data-title="Equatorial Guinea">Equatorial Guinea (+240)</option>
+                            <option value="+291" data-title="Eritrea">Eritrea (+291)</option>
+                            <option value="+372" data-title="Estonia">Estonia (+372)</option>
+                            <option value="+251" data-title="Ethiopia">Ethiopia (+251)</option>
+                            <option value="+679" data-title="Fiji">Fiji (+679)</option>
+                            <option value="+33" data-title="France">France (+33)</option>
+                            <option value="+49" data-title="Germany">Germany (+49)</option>
+                            <option value="+91" data-title="India">India (+91)</option>
+                            <option value="+62" data-title="Indonesia">Indonesia (+62)</option>
+                            <option value="+98" data-title="Iran">Iran (+98)</option>
+                            <option value="+964" data-title="Iraq">Iraq (+964)</option>
+                            <option value="+353" data-title="Ireland">Ireland (+353)</option>
+                            <option value="+972" data-title="Israel">Israel (+972)</option>
+                            <option value="+39" data-title="Italy">Italy (+39)</option>
+                            <option value="+81" data-title="Japan">Japan (+81)</option>
+                            <option value="+962" data-title="Jordan">Jordan (+962)</option>
+                            <option value="+254" data-title="Kenya">Kenya (+254)</option>
+                            <option value="+82" data-title="South Korea">South Korea (+82)</option>
+                            <option value="+965" data-title="Kuwait">Kuwait (+965)</option>
+                            <option value="+856" data-title="Laos">Laos (+856)</option>
+                            <option value="+961" data-title="Lebanon">Lebanon (+961)</option>
+                            <option value="+231" data-title="Liberia">Liberia (+231)</option>
+                            <option value="+218" data-title="Libya">Libya (+218)</option>
+                            <option value="+60" data-title="Malaysia">Malaysia (+60)</option>
+                            <option value="+52" data-title="Mexico">Mexico (+52)</option>
+                            <option value="+31" data-title="Netherlands">Netherlands (+31)</option>
+                            <option value="+234" data-title="Nigeria">Nigeria (+234)</option>
+                            <option value="+47" data-title="Norway">Norway (+47)</option>
+                            <option value="+63" data-title="Philippines">Philippines (+63)</option>
+                            <option value="+7" data-title="Russia">Russia (+7)</option>
+                            <option value="+966" data-title="Saudi Arabia">Saudi Arabia (+966)</option>
+                            <option value="+27" data-title="South Africa">South Africa (+27)</option>
+                            <option value="+34" data-title="Spain">Spain (+34)</option>
+                            <option value="+46" data-title="Sweden">Sweden (+46)</option>
+                            <option value="+41" data-title="Switzerland">Switzerland (+41)</option>
+                            <option value="+90" data-title="Turkey">Turkey (+90)</option>
+                            <option value="+44" data-title="United Kingdom">United Kingdom (+44)</option>
+                            <option value="+1" data-title="United States">United States (+1)</option>
+                            <option value="+84" data-title="Vietnam">Vietnam (+84)</option>
+                            <option value="+263" data-title="Zimbabwe">Zimbabwe (+263)</option>
+
+                        </select>
+                        <input type="ccin" maxlength="20" class="none">
+                    </div>
+                    <div class="pnumber con-div">
+                        <label for="number">Phone Number</label>
+                        <input type="number" maxlength="20">
+                    </div>
+                </div>
+                <div class="con-div f3">
+                    <label for="email">Email</label>
+                    <input type="email" maxlength="500">
+                </div>
+                <div class="con-div f4">
+                    <label for="complaint">How Can We Help You ?</label>
+                    <textarea type="text" maxlength="1000"></textarea>
+                </div>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="foot-grid">
+            <div class="foot-sec">
+                <div class="foot-ttl">Buyer Resources </div>
+                <div class="foot-links">
+                    <a class="foot-link">Find Your Dream Home</a>
+                    <a class="foot-link">Home Valuation Tool</a>
+                    <a class="foot-link">Expert Buying Tips</a>
+                    <a class="foot-link">Browse Listings</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">Seller Resources </div>
+                <div class="foot-links">
+                    <a class="foot-link">Maximize Your Home’s Value</a>
+                    <a class="foot-link">Selling Made Simple Guide</a>
+                    <a class="foot-link">Mortgage & Market Insights</a>
+                    <a class="foot-link">Our Commitment to You</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">Company</div>
+                <div class="foot-links">
+                    <a class="foot-link">Who We Are?</a>
+                    <a class="foot-link">Get in Touch</a>
+                    <a class="foot-link">Partnerships & Certifications</a>
+                    <a class="foot-link">Success Stories & Testimonials</a>
+                </div>
+            </div>
+
+            <div class="foot-sec">
+                <div class="foot-ttl">MB Real Estate </div>
+                <div class="foot-links">
+                    <a class="foot-link">📍 79 E. 14th Avenue, City, State, Zip</a>
+                    <a class="foot-link">📞 (561) 555-8954</a>
+                    <a class="foot-link">📠 (561) 555-8172</a>
+                    <a class="foot-link">info@MBRealtors.com</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="foot-logo-con"><img src="logomono.png" alt="" width="100%" height="100%"></div>
+
+        <p class="dis">©2025 MB Real Estate. All rights reserved.</p>
+    </footer>
+
+
+    <script src="def.js"></script>
+    <script>
+        const socials = document.querySelectorAll('.social-a')
+        const conInfo = document.querySelector('.contact-info')
+        const info    = document.querySelectorAll('.info-con')
+        const formTl  = document.querySelector('.customer-form h1')
+        const formItem = document.querySelectorAll('.customer-form > div')
+        const pItem = document.querySelectorAll('.phone-con > div') 
+
+
+        const socialObserver = new IntersectionObserver(
+            entries => {
+                entries.forEach(
+                    entry => {
+                        if(entry.isIntersecting){
+                            setTimeout(() => {
+                                entry.target.classList.add('sdef')
+                            },1000)                  
+                            socialObserver.unobserve(entry.target)
+                        }
+                    }
+                )
+            },{threshold: 1, rootMargin:'30px'}
+        )
+            socials.forEach(
+                social => {
+                    socialObserver.observe(social)
+                }
+            )
+
+
+        const formObserver = new IntersectionObserver(
+            entries => {
+                entries.forEach(
+                    entry => {
+                        if(entry.isIntersecting){
+                            entry.target.classList.add('cdef')
+                            
+                        }
+                    }
+                )
+            }
+        )
+
+        formItem.forEach(
+            item => {
+                formObserver.observe(item)
+            }
+        )
+        pItem.forEach(
+            item => {
+                formObserver.observe(item)
+            }
+        )
+        formObserver.observe(formTl)
+
+        
+
+
+    </script>
+</body>
+</html>
